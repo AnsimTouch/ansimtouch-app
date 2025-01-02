@@ -11,6 +11,8 @@ export const Container = styled.SafeAreaView`
   height: 100%;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  background-color: #fbfdff;
 `;
 
 export const MainWrapper = styled(Box)`
@@ -33,7 +35,20 @@ export const UserButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #2882ff;
-  width: 20%;
+  width: 30%;
   height: 100%;
   border-radius: 5px;
+`;
+
+export const SearchView = styled.View`
+  width: 100%;
+  height: 5%;
+`;
+
+export const Search = styled.TextInput`
+  border: 1px solid #ededed;
+  border-radius: 5px;
+  padding-left: 20px;
+  width: 100%;
+  height: 100%;
 `;

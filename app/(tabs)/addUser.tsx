@@ -1,20 +1,35 @@
-import { Text, TouchableOpacity, View, Image } from "react-native";
+import { useState } from "react";
 import * as S from "../../style/user";
-import { useNavigation } from "expo-router";
-import { StackNavigationProp } from "@react-navigation/stack";
-type RootStackParamList = {
-  User: undefined;
-};
+import Nav from "@/components/Nav/nav";
+import { Image, TouchableOpacity } from "react-native";
+
 export default function AddUser() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [number, setNumber] = useState<string>();
+  const regex = /^[0-9-]*$/;
+  const isNumber = (value: string) => {
+    if (regex.test(value)) {
+      setNumber(value);
+    }
+  };
+
   return (
     <S.Container>
-      <View>
-        <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <Image source={require("../../assets/images/Arrow.png")} />
-        </TouchableOpacity>
-        <Text>유저관리</Text>
-      </View>
+      <Nav title="유저 추가하기" router="User" />
+      <S.MainWrapper>
+        <S.SearchView>
+          <S.Search
+            placeholder="전화번호를 입력해주세요."
+            value={number}
+            onChangeText={isNumber}
+            maxLength={13}
+          />
+          <TouchableOpacity
+            style={{ position: "absolute", right: "10%", top: "20%" }}
+          >
+            <Image source={require("../../assets/images/Search.png")} />
+          </TouchableOpacity>
+        </S.SearchView>
+      </S.MainWrapper>
     </S.Container>
   );
 }
