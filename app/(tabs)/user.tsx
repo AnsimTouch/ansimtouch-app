@@ -1,28 +1,16 @@
-import {
-  Text,
-  View,
-  Image,
-  ScrollView,
-  FlatList,
-  StyleSheet,
-} from "react-native";
+import { Text, FlatList, StyleSheet } from "react-native";
 import * as S from "../../style/user";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
 import UserBox from "@/components/UserBox/userBox";
+import { UserType } from "@/components/UserBox/userType";
 
 type RootStackParamList = {
   AddUser: undefined;
 };
 
-interface User {
-  id: string;
-  name: string;
-  number: string;
-}
-
-const userList: User[] = [
+const userList: UserType[] = [
   { id: "1", name: "이름", number: "010-1234-5678" },
   { id: "2", name: "이름", number: "010-1234-5678" },
   { id: "3", name: "이름", number: "010-1234-5678" },
@@ -44,7 +32,7 @@ export default function User() {
             <Text style={{ color: "white" }}>추가하기</Text>
           </S.UserButton>
         </S.MenuTable>
-        <FlatList<User>
+        <FlatList<UserType>
           style={styles.FlatList}
           data={userList}
           keyExtractor={(item) => item.id}

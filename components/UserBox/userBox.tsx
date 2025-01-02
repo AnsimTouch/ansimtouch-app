@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
+import { Swipeable } from "react-native-gesture-handler";
 
 interface UserProps {
   name: string;
