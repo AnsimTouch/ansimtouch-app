@@ -1,11 +1,36 @@
-import { Text, TouchableOpacity, View, Image } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  FlatList,
+  StyleSheet,
+} from "react-native";
 import * as S from "../../style/user";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
+import UserBox from "@/components/UserBox/userBox";
+
 type RootStackParamList = {
   AddUser: undefined;
 };
+
+interface User {
+  id: string;
+  name: string;
+  number: string;
+}
+
+const userList: User[] = [
+  { id: "1", name: "이름", number: "010-1234-5678" },
+  { id: "2", name: "이름", number: "010-1234-5678" },
+  { id: "3", name: "이름", number: "010-1234-5678" },
+  { id: "4", name: "이름", number: "010-1234-5678" },
+  { id: "5", name: "이름", number: "010-1234-5678" },
+  { id: "6", name: "이름", number: "010-1234-5678" },
+  { id: "7", name: "이름", number: "010-1234-5678" },
+];
 
 export default function User() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -19,7 +44,23 @@ export default function User() {
             <Text style={{ color: "white" }}>추가하기</Text>
           </S.UserButton>
         </S.MenuTable>
+        <FlatList<User>
+          style={styles.FlatList}
+          data={userList}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <UserBox name={item.name} number={item.number} />
+          )}
+        />
       </S.MainWrapper>
     </S.Container>
   );
 }
+
+const styles = StyleSheet.create({
+  FlatList: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+});

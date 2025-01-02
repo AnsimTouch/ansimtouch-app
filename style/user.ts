@@ -18,12 +18,14 @@ export const Container = styled.SafeAreaView`
 export const MainWrapper = styled(Box)`
   width: 80%;
   height: 100%;
+  justify-content: none;
 `;
 
 export const MenuTable = styled(Box)`
   width: 100%;
   height: 30px;
   flex-direction: row;
+  margin-bottom: 19px;
 `;
 
 export const Title = styled.Text`
@@ -43,6 +45,7 @@ export const UserButton = styled.TouchableOpacity`
 export const SearchView = styled.View`
   width: 100%;
   height: 5%;
+  margin-bottom: 19px;
 `;
 
 export const Search = styled.TextInput`
@@ -51,4 +54,12 @@ export const Search = styled.TextInput`
   padding-left: 20px;
   width: 100%;
   height: 100%;
+`;
+
+export const ListWrapper = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 `;
