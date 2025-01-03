@@ -8,7 +8,7 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen></Tabs.Screen>
+      <Tabs.Screen name="chat" options={{ title: "Chat" }} />
     </Tabs>
   );
 }
