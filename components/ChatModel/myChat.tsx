@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import Svg, { Path } from "react-native-svg";
 
 interface ChatProps {
   text: string;
@@ -9,19 +8,12 @@ export default function MyChat({ text }: ChatProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.chat}>{text}</Text>
-      <View style={styles.tale}>
-        <Svg
-          width="12"
-          height="10"
-          viewBox="0 0 12 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Path
-            d="M11.084 9.77345C6.0301 10.8708 2.18226 7.71588 0.890073 6.00124L1.03365 0.85732C2.42155 1.20025 5.42708 1.50888 6.34597 0C6.20239 6.1727 10.079 9.25906 11.084 9.77345Z"
-            fill="#ECF4FF"
-          />
-        </Svg>
+      <Image
+        source={require("../../assets/images/ChatTale.png")}
+        style={styles.tale}
+      />
+      <View style={styles.profile}>
+        <Text style={styles.profileText}>나</Text>
       </View>
     </View>
   );
@@ -29,7 +21,9 @@ export default function MyChat({ text }: ChatProps) {
 
 const styles = StyleSheet.create({
   container: {
+    left: "25%",
     width: "auto",
+    maxWidth: "80%",
     height: "auto",
     backgroundColor: "#ECF4FF",
     paddingLeft: 14,
@@ -44,7 +38,25 @@ const styles = StyleSheet.create({
   },
   tale: {
     position: "absolute",
-    bottom: -6,
-    right: -7,
+    bottom: -3,
+    right: -6,
+  },
+  profile: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    position: "absolute",
+    backgroundColor: "white",
+    right: -40,
+    bottom: -20,
+    borderWidth: 1,
+    borderColor: "#D9D9D9",
+    borderStyle: "solid",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileText: {
+    fontSize: 12,
   },
 });
