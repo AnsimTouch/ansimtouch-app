@@ -7,23 +7,23 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "expo-router";
-import { StackNavigationProp } from "@react-navigation/stack";
-
-type RootStackParamList = {
-  User: undefined;
-};
 
 interface NavProps {
   title: string;
-  router: keyof RootStackParamList;
+  router: string;
 }
 
 export default function Nav({ title, router }: NavProps) {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation();
 
+  const handleNavigate = () => {
+    if (navigation.canGoBack()) {
+      navigation.navigate(router as never);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate(router)}>
+      <TouchableOpacity onPress={handleNavigate}>
         <Image source={require("../../assets/images/Arrow.png")} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>

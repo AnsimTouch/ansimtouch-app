@@ -1,10 +1,23 @@
-import { Text, FlatList, StyleSheet } from "react-native";
+import {
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  Animated,
+  Image,
+} from "react-native";
 import * as S from "../../style/user";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
 import UserBox from "@/components/UserBox/userBox";
 import { UserType } from "@/components/UserBox/userType";
+import {
+  Swipeable,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import SelectModal from "@/components/Modal/modal";
+import { useState } from "react";
 
 type RootStackParamList = {
   AddUser: undefined;
@@ -21,6 +34,37 @@ const userList: UserType[] = [
 ];
 
 export default function User() {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [selectedName, setSelectedName] = useState<string>("");
+
+  const onPressModalOpen = (name: string) => {
+    setIsModalVisible(true);
+    setSelectedName(name);
+  };
+
+  const renderRightActions = (
+    dragX: Animated.AnimatedInterpolation<number>,
+    name: string
+  ) => {
+    const trans = dragX.interpolate({
+      inputRange: [0, 50, 100, 101],
+      outputRange: [0, 0, 0, 1],
+    });
+    return (
+      <Pressable onPress={() => onPressModalOpen(name)}>
+        <Animated.View
+          style={[
+            styles.delete,
+            {
+              transform: [{ translateX: trans }],
+            },
+          ]}
+        >
+          <Image source={require("../../assets/images/Delete.png")} />
+        </Animated.View>
+      </Pressable>
+    );
+  };
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <S.Container>
@@ -37,10 +81,26 @@ export default function User() {
           data={userList}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <UserBox name={item.name} number={item.number} />
+            <GestureHandlerRootView>
+              <Swipeable
+                renderRightActions={(dragX) =>
+                  renderRightActions(dragX, item.name)
+                }
+              >
+                <UserBox name={item.name} number={item.number} />
+              </Swipeable>
+            </GestureHandlerRootView>
           )}
         />
       </S.MainWrapper>
+      <S.ModalView>
+        <SelectModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          title={`${selectedName} 님을 삭제합니다.`}
+          detail="삭제를 누르면 관계가 삭제됩니다."
+        />
+      </S.ModalView>
     </S.Container>
   );
 }
@@ -50,5 +110,14 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "column",
+  },
+  delete: {
+    width: 40,
+    height: 84,
+    backgroundColor: "#FF3232",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
   },
 });

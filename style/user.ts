@@ -63,3 +63,9 @@ export const ListWrapper = styled.View`
   align-items: center;
   gap: 10px;
 `;
+
+export const ModalView = styled(Box)`
+  width: 100%;
+  height: 100%;
+  background-color: "black";
+`;
