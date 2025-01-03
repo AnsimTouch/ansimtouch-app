@@ -14,8 +14,3 @@ export const Container = styled.SafeAreaView`
   flex-direction: column;
   background-color: #fbfdff;
 `;
-
-export const ChatWrapper = styled(Box)`
-  width: 100%;
-  gap: 25px;
-`;
