@@ -64,17 +64,6 @@ export const ModalWrapper = styled(Box)`
   justify-content: space-evenly;
 `;
 
-export const ModalText = styled(Box)`
-  width: 85%;
-  align-items: flex-start;
-`;
-
-export const ButtonWrapper = styled(Box)`
-  width: 85%;
-  justify-content: space-between;
-  flex-direction: row;
-`;
-
 export const ModalButton = styled.TouchableOpacity<colorProps>`
   width: 48%;
   height: 54px;

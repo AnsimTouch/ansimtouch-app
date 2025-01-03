@@ -1,28 +1,17 @@
-import {
-  StyleSheet,
-  Text,
-  Image,
-  Modal,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, Image } from "react-native";
 import * as S from "../../style/emergency";
 import Nav from "@/components/Nav/nav";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import SelectModal from "@/components/Modal/modal";
 
 export default function Emergency() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  useEffect(() => {}, []);
 
   const onPressModalOpen = () => {
     console.log("팝업을 여는 중입니다.");
     setIsModalVisible(true);
   };
 
-  const onPressModalClose = () => {
-    setIsModalVisible(false);
-  };
   return (
     <S.Container>
       <Nav title="긴급 알림" router="User" />
@@ -36,28 +25,12 @@ export default function Emergency() {
         </S.ContentWrapper>
       </S.MainWrapper>
       <S.ModalView>
-        <Modal animationType="fade" visible={isModalVisible} transparent={true}>
-          <S.ModalContainer>
-            <S.ModalWrapper>
-              <S.ModalText>
-                <Text style={styles.modalTitle}>
-                  정말로 알림을{`\n`}실행하시겠습니까?
-                </Text>
-                <Text style={styles.modalDetail}>
-                  해당 알림은 취소 할 수 없습니다.
-                </Text>
-              </S.ModalText>
-              <S.ButtonWrapper>
-                <S.ModalButton onPress={onPressModalClose} color="#D9D9D9">
-                  <Text style={styles.modalCancelText}>취소</Text>
-                </S.ModalButton>
-                <S.ModalButton color="#FF3232">
-                  <Text style={styles.modalConfirmText}>실행</Text>
-                </S.ModalButton>
-              </S.ButtonWrapper>
-            </S.ModalWrapper>
-          </S.ModalContainer>
-        </Modal>
+        <SelectModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          title={`정말로 알림을${`\n`}실행하시겠습니까?`}
+          detail="해당 알림은 취소 할 수 없습니다."
+        />
       </S.ModalView>
     </S.Container>
   );
