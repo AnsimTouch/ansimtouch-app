@@ -8,13 +8,12 @@ export default function Emergency() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onPressModalOpen = () => {
-    console.log("팝업을 여는 중입니다.");
     setIsModalVisible(true);
   };
 
   return (
     <S.Container>
-      <Nav title="긴급 알림" router="User" />
+      <Nav title="긴급 알림" router="Main" />
       <S.MainWrapper>
         <S.ContentWrapper>
           <Image source={require("../../assets/images/Emergency.png")} />
