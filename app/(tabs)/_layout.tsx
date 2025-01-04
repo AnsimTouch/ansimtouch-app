@@ -8,7 +8,13 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen></Tabs.Screen>
+      <Tabs.Screen name="user" options={{ title: "User" }} />
+      <Tabs.Screen name="addUser" options={{ title: "AddUser" }} />
+      <Tabs.Screen name="Login" options={{ title: "Login" }}></Tabs.Screen>
+      <Tabs.Screen
+        name="Register"
+        options={{ title: "Register" }}
+      ></Tabs.Screen>
     </Tabs>
   );
 }

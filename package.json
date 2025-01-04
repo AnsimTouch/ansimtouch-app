@@ -43,6 +43,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
+    "react-navigation-stack": "^2.10.4",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
