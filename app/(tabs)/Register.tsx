@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, TextInput, StyleSheet, Pressable, View } from "react-native";
-import * as S from "../../styles/auth";
+import * as S from "../../style/auth";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
