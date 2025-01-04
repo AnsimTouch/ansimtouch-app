@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-    <Stack.Navigator initialRouteName="User">
+    <Stack.Navigator>
       <Stack.Screen
         name="Index"
         component={Index}
