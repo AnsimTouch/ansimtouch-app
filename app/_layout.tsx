@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Index from "./(tabs)";
-Index;
 
 const Stack = createStackNavigator();
 
