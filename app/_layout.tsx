@@ -6,12 +6,24 @@ import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
+import ForgotPassword from "./(tabs)/ForgotPassword";
+import Profile from "./(tabs)/Profile";
 
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="ChangePhone"
         component={ChangePhone}
