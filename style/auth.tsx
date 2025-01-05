@@ -33,6 +33,21 @@ export const Input = styled.TextInput`
   margin-bottom: 10px;
 `;
 
+export const PhoneInputWrapper = styled.View`
+  flex-direction: row;
+  margin-bottom: 10px;
+`;
+
+export const PhoneButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-left: 10px;
+  color: #2882ff;
+`;
+
 export const Link = styled.TouchableOpacity`
   color: #2882ff;
   font-size: 12px;

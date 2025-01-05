@@ -121,7 +121,7 @@ export default function Register() {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />
-        <PhoneInputWrapper>
+        <S.PhoneInputWrapper>
           <S.Input
             placeholder="전화번호를 입력해주세요."
             placeholderTextColor="#4C4C4C"
@@ -130,8 +130,10 @@ export default function Register() {
             keyboardType="numeric"
             style={{ flex: 1 }}
           ></S.Input>
-          <PhoneButton onPress={onRequestVerification}>인증하기</PhoneButton>
-        </PhoneInputWrapper>
+          <S.PhoneButton onPress={onRequestVerification}>
+            인증하기
+          </S.PhoneButton>
+        </S.PhoneInputWrapper>
         {isVerificationStarted && (
           <S.Input
             placeholder="인증코드를 입력해주세요."
@@ -174,21 +176,6 @@ export default function Register() {
     </S.AuthContainer>
   );
 }
-
-const PhoneInputWrapper = styled.View`
-  flex-direction: row;
-  margin-bottom: 10px;
-`;
-
-const PhoneButton = styled.TouchableOpacity`
-  position: absolute;
-  right: 0;
-  cursor: pointer;
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-left: 10px;
-  color: #2882ff;
-`;
 
 const CheckboxWrapper = styled.View`
   display: flex;
