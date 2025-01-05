@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal, Text, View, StyleSheet, Pressable } from "react-native";
+import { Modal } from "react-native";
+import styled from "styled-components/native";
 
 interface SelectModalProps {
   isModalVisible: boolean;
@@ -7,6 +8,45 @@ interface SelectModalProps {
   title: string;
   detail: string;
 }
+
+const Overlay = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalView = styled.View`
+  width: 80%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+const Title = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const Detail = styled.Text`
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const Button = styled.Pressable`
+  background-color: #007bff;
+  padding-vertical: 10px;
+  padding-horizontal: 20px;
+  border-radius: 5px;
+`;
+
+const ButtonText = styled.Text`
+  color: white;
+  font-weight: bold;
+`;
 
 const SelectModal: React.FC<SelectModalProps> = ({
   isModalVisible,
@@ -21,56 +61,17 @@ const SelectModal: React.FC<SelectModalProps> = ({
       animationType="fade"
       onRequestClose={() => setIsModalVisible(false)}
     >
-      <View style={styles.overlay}>
-        <View style={styles.modalView}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.detail}>{detail}</Text>
-          <Pressable
-            style={styles.button}
-            onPress={() => setIsModalVisible(false)}
-          >
-            <Text style={styles.buttonText}>확인</Text>
-          </Pressable>
-        </View>
-      </View>
+      <Overlay>
+        <ModalView>
+          <Title>{title}</Title>
+          <Detail>{detail}</Detail>
+          <Button onPress={() => setIsModalVisible(false)}>
+            <ButtonText>확인</ButtonText>
+          </Button>
+        </ModalView>
+      </Overlay>
     </Modal>
   );
 };
 
 export default SelectModal;
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
-    width: "80%",
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  detail: {
-    fontSize: 14,
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-});
