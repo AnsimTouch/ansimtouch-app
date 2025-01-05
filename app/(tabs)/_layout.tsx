@@ -19,6 +19,10 @@ export default function TabLayout() {
         name="ChangePassword"
         options={{ title: "ChangePassword" }}
       ></Tabs.Screen>
+      <Tabs.Screen
+        name="ChangePhone"
+        options={{ title: "ChangePhone" }}
+      ></Tabs.Screen>
     </Tabs>
   );
 }
