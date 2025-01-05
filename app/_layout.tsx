@@ -1,9 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import Login from "./(tabs)/Login";
-import Register from "./(tabs)/Register";
+import Login from "./(tabs)/login";
+import Register from "./(tabs)/register";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
+import ChangePassword from "./(tabs)/changePassword";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,11 @@ export default function RootLayout() {
       <Stack.Screen
         name="User"
         component={User}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
