@@ -24,13 +24,13 @@ type RootStackParamList = {
 };
 
 const userList: UserType[] = [
-  { id: "1", name: "이름", number: "010-1234-5678" },
-  { id: "2", name: "이름", number: "010-1234-5678" },
-  { id: "3", name: "이름", number: "010-1234-5678" },
-  { id: "4", name: "이름", number: "010-1234-5678" },
-  { id: "5", name: "이름", number: "010-1234-5678" },
-  { id: "6", name: "이름", number: "010-1234-5678" },
-  { id: "7", name: "이름", number: "010-1234-5678" },
+  { id: "1", name: "이름", number: "01012345678" },
+  { id: "2", name: "이름", number: "01012345678" },
+  { id: "3", name: "이름", number: "01012345678" },
+  { id: "4", name: "이름", number: "01012345678" },
+  { id: "5", name: "이름", number: "01012345678" },
+  { id: "6", name: "이름", number: "01012345678" },
+  { id: "7", name: "이름", number: "01012345678" },
 ];
 
 export default function User() {
