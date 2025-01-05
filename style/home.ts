@@ -19,6 +19,8 @@ export const Nav = styled(Box)`
   flex-direction: row;
   justify-content: space-between;
   width: 90%;
+  height: 40px;
+  margin-bottom: 20px;
 `;
 
 export const NavTitle = styled.Text`
@@ -29,4 +31,16 @@ export const NavTitle = styled.Text`
 export const NavImage = styled(Box)`
   flex-direction: row;
   gap: 10px;
+`;
+
+export const MainWrapper = styled(Box)`
+  width: 80%;
+  align-items: flex-start;
+`;
+
+export const UserWrapper = styled.ScrollView`
+  flex-direction: row;
+  width: 100%;
+  height: 40px;
+  border: 1px solid black;
 `;
