@@ -6,6 +6,7 @@ import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/auth";
 import * as S from "../../style/auth";
 import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
 
 type RootStackParamList = {
   Login: undefined;
@@ -25,6 +26,11 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
+  const [isParent, setIsParent] = useState<boolean>(true);
+
+  const handleCheckboxChange = (value: boolean) => {
+    setIsParent(value);
+  };
 
   const apiKey = "skjdklas"; // 임시 API 키
 
@@ -136,9 +142,23 @@ export default function Register() {
         )}
       </S.MainWrapper>
 
-      <S.Link onPress={() => navigation.navigate("Login")}>
-        이미 아이디가 있으신가요?
-      </S.Link>
+      <CheckboxWrapper>
+        <CustomCheckbox
+          value={isParent}
+          onValueChange={() => handleCheckboxChange(true)}
+          label="보호자로 가입"
+        />
+        <CustomCheckbox
+          value={!isParent}
+          onValueChange={() => handleCheckboxChange(false)}
+          label="대상자로 가입"
+        />
+
+        <S.Link onPress={() => navigation.navigate("Login")}>
+          이미 아이디가 있으신가요?
+        </S.Link>
+      </CheckboxWrapper>
+
       {errorMessage ? <S.ErrorMessage>{errorMessage}</S.ErrorMessage> : null}
 
       <S.Button onPress={onRegister} disabled={isLoading}>
@@ -164,8 +184,58 @@ const PhoneButton = styled.TouchableOpacity`
   position: absolute;
   right: 0;
   cursor: pointer;
-  color: #2882ff;
   padding: 10px 15px;
   border-radius: 5px;
   margin-left: 10px;
+  color: #2882ff;
 `;
+
+const CheckboxWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  margin-bottom: 10px;
+`;
+
+const CheckboxSquare = styled.View<{ checked: boolean }>`
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ededed;
+  border-radius: 5px;
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+`;
+
+const CheckboxLabel = styled.Text`
+  font-size: 12px;
+  color: #4c4c4c;
+`;
+
+const CheckMark = styled.Text`
+  color: #2882ff;
+  font-size: 14px;
+  font-weight: bold;
+`;
+
+const CustomCheckbox = ({
+  value,
+  onValueChange,
+  label,
+}: {
+  value: boolean;
+  onValueChange: () => void;
+  label: string;
+}) => (
+  <TouchableOpacity
+    onPress={onValueChange}
+    style={{ flexDirection: "row", alignItems: "center", marginRight: 13 }}
+  >
+    <CheckboxSquare checked={value}>
+      {value && <CheckMark>✔</CheckMark>}
+    </CheckboxSquare>
+    <CheckboxLabel>{label}</CheckboxLabel>
+  </TouchableOpacity>
+);
