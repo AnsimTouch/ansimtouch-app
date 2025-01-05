@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const AuthContainer = styled.View`
+export const AuthContainer = styled.SafeAreaView`
   background-color: #fbfdff;
   flex: 1;
   margin: 0;
