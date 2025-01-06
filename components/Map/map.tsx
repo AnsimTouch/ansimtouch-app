@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Alert } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
+import Geolocation from "react-native-geolocation-service";
 
 export default function Map() {
   const [region, setRegion] = useState<Region>({
@@ -9,9 +10,9 @@ export default function Map() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+
   const changeRegion = (newRegion: Region) => {
     setRegion(newRegion);
-    console.log(region);
   };
 
   return (
