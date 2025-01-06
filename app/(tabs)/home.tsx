@@ -2,7 +2,7 @@ import { Image } from "react-native";
 import * as S from "../../style/home";
 import AdBox from "@/components/Home/adBox";
 import UserBox from "@/components/Home/userBox";
-import { userType } from "@/components/Home/main";
+import { userType } from "@/components/Home/home";
 
 const userList: userType[] = [
   { id: "1", name: "이름", state: "7시간 전" },

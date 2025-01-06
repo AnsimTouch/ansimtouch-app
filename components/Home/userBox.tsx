@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { userProps } from "./main";
+import { userProps } from "./home";
 
 export default function UserBox({ name, state }: userProps) {
   return (
