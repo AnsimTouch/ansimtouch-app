@@ -1,7 +1,7 @@
 import { Image } from "react-native";
 import * as S from "../../style/check";
 import AdBox from "@/components/Home/adBox";
-import Box from "@/components/Home/box";
+import Box from "@/components/box";
 
 export default function Check() {
   return (

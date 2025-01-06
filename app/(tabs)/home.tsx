@@ -3,7 +3,7 @@ import * as S from "../../style/home";
 import AdBox from "@/components/Home/adBox";
 import UserBox from "@/components/Home/userBox";
 import { userType } from "@/components/Home/home";
-import Box from "@/components/Home/box";
+import Box from "@/components/box";
 
 const userList: userType[] = [
   { id: "1", name: "이름", state: "7시간 전" },
