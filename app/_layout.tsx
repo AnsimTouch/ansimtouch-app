@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Index from "./(tabs)";
+import Locate from "./(tabs)/locate";
 
 const Stack = createStackNavigator();
 
@@ -8,8 +8,8 @@ export default function RootLayout() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Index"
-        component={Index}
+        name="Locate"
+        component={Locate}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
