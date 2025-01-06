@@ -42,5 +42,4 @@ export const UserWrapper = styled.ScrollView`
   flex-direction: row;
   width: 100%;
   height: 40px;
-  border: 1px solid black;
 `;

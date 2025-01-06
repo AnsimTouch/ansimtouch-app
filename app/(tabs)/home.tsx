@@ -6,9 +6,12 @@ import { userType } from "@/components/Home/main";
 
 const userList: userType[] = [
   { id: "1", name: "이름", state: "7시간 전" },
-  { id: "2", name: "이름", state: "현재 접속 중" },
+  { id: "2", name: "이름", state: "7시간 전" },
+  { id: "3", name: "이름", state: "현재 접속 중" },
+  { id: "4", name: "이름", state: "현재 접속 중" },
 ];
 
+// 한번에 두 개 딱 맞게 하는 건 도저히 못하겠음 나중에 시간 남으면 ㄱㄱ
 export default function Home() {
   return (
     <S.Container>

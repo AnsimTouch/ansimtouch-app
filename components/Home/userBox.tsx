@@ -15,7 +15,6 @@ export default function UserBox({ name, state }: userProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "50%",
     height: "100%",
     backgroundColor: "#ECF4FF",
     borderRadius: 5,
@@ -23,6 +22,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginRight: 5,
+    padding: 5,
   },
   name: {
     fontSize: 10,
