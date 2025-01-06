@@ -32,10 +32,14 @@ const Box: React.FC<BoxProps> = ({
     <Container backgroundColor={backgroundColor} onPress={handlePress}>
       <Icon source={iconSource} />
       <TextWrapper>
-        <Title isAlert={title === "긴급 알림"}>{title}</Title>
+        <Title isAlert={title === "긴급 알림" || title === "채팅하기기"}>
+          {title}
+        </Title>
         <Content
           isAlert={
-            content === "5분 이내로 응답이 없을시 보호자에게 알림을 전송합니다."
+            content ===
+              "5분 이내로 응답이 없을시 보호자에게 알림을 전송합니다." ||
+            content === "AI와 채팅합니다."
           }
         >
           {content}
