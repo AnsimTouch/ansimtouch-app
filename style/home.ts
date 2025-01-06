@@ -43,3 +43,11 @@ export const UserWrapper = styled.ScrollView`
   width: 100%;
   height: 40px;
 `;
+
+export const BoxContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+
+  margin-top: 10px;
+`;
