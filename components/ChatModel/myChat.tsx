@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   chat: {
-    fontSize: 12,
+    fontSize: 16,
   },
   tale: {
     position: "absolute",
