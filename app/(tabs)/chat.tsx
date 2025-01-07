@@ -35,6 +35,7 @@ export default function Chat() {
         <S.ChatView
           placeholder="채팅을 입력해 주세요."
           onChange={handleChatChange}
+          multiline={true}
         />
         <S.SendImage chat={chat} onPress={sendChat}>
           <Image source={require("../../assets/images/Send.png")} />

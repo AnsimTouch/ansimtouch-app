@@ -29,8 +29,8 @@ export const InputContainer = styled.View`
 `;
 
 export const ChatView = styled.TextInput`
-  width: 100%;
-  height: 40px;
+  width: 90%;
+  height: 100%;
   padding-left: 10%;
   padding-right: 10%;
   position: absolute;
