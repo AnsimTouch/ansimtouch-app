@@ -15,7 +15,10 @@ export default function Chat() {
     e: NativeSyntheticEvent<TextInputChangeEventData>
   ) => {
     setChat(e.nativeEvent.text);
-    console.log(chat);
+  };
+  const day = new Date();
+  const sendChat = () => {
+    const formattedDate = `${day.getHours()}:${day.getMinutes()}`;
   };
 
   return (
@@ -28,7 +31,7 @@ export default function Chat() {
           placeholder="채팅을 입력해 주세요."
           onChange={handleChatChange}
         />
-        <S.SendImage chat={chat}>
+        <S.SendImage chat={chat} onPress={sendChat}>
           <Image source={require("../../assets/images/Send.png")} />
         </S.SendImage>
       </S.InputContainer>

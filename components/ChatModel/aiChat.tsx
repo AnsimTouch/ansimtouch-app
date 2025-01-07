@@ -7,6 +7,7 @@ interface ChatProps {
 export default function AiChat({ text }: ChatProps) {
   return (
     <View style={styles.container}>
+      <Text style={styles.time}>12:10</Text>
       <Text style={styles.chat}>{text}</Text>
       <View style={styles.tale}>
         <Image source={require("../../assets/images/AiChatTale.png")} />
@@ -26,6 +27,13 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 20,
     position: "relative",
+    right: "30%",
+  },
+  time: {
+    position: "absolute",
+    bottom: 0,
+    right: -30,
+    fontSize: 10,
   },
   chat: {
     fontSize: 12,

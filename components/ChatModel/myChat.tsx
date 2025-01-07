@@ -7,6 +7,7 @@ interface ChatProps {
 export default function MyChat({ text }: ChatProps) {
   return (
     <View style={styles.container}>
+      <Text style={styles.time}>12:10</Text>
       <Text style={styles.chat}>{text}</Text>
       <View style={styles.tale}>
         <Image source={require("../../assets/images/ChatTale.png")} />
@@ -27,6 +28,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: "relative",
     maxWidth: "50%",
+  },
+  time: {
+    position: "absolute",
+    bottom: 0,
+    left: -30,
+    fontSize: 10,
   },
   chat: {
     fontSize: 12,
