@@ -38,6 +38,7 @@ export default function Emergency() {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
+    fontWeight: 700,
   },
   buttonText: {
     fontSize: 20,
