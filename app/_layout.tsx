@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Taxi">
       <Stack.Screen
         name="Locate"
         component={Locate}
@@ -17,10 +17,13 @@ export default function RootLayout() {
       <Stack.Screen
         name="Taxi"
         component={Taxi}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Emergency"
         component={Emergency}
         options={{ headerShown: false }}
       />
+    </Stack.Navigator>
   );
 }
