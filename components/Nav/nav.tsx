@@ -17,7 +17,9 @@ export default function Nav({ title, router }: NavProps) {
   const navigation = useNavigation();
 
   const handleNavigate = () => {
-    navigation.navigate(router as never);
+    if (navigation.canGoBack()) {
+      navigation.navigate(router as never);
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
