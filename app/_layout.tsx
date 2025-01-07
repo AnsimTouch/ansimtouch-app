@@ -2,12 +2,13 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Locate from "./(tabs)/locate";
 import Taxi from "./(tabs)/taxi";
+import Emergency from "./(tabs)/emergency";
 
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-    <Stack.Navigator initialRouteName="Taxi">
+    <Stack.Navigator>
       <Stack.Screen
         name="Locate"
         component={Locate}
@@ -16,8 +17,10 @@ export default function RootLayout() {
       <Stack.Screen
         name="Taxi"
         component={Taxi}
+      <Stack.Screen
+        name="Emergency"
+        component={Emergency}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
   );
 }
