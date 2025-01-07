@@ -17,15 +17,20 @@ export default function Chat() {
     setChat(e.nativeEvent.text);
   };
   const day = new Date();
-  const sendChat = () => {
-    const formattedDate = `${day.getHours()}:${day.getMinutes()}`;
-  };
+  const formattedDate = `${day.getHours()}:${day.getMinutes()}`;
+  const sendChat = () => {};
 
   return (
     <S.Container>
       <Nav title="채팅하기" router="Home" />
-      <MyChat text="나입니gdajadgoiadgiahdiㅏadgdgdggdadadgadgadgadgagdgafhhffshsfhfhfshfshsfhsfhsfhfsdfshfh" />
-      <AiChat text="누구야" />
+      <MyChat
+        text="나입니gdajadgoiadgiahdiㅏadgdgdggdadadgadgadgadgagdgafhhffshsfhfhfshfshsfhsfhsfhfsdfshfh"
+        date={formattedDate}
+      />
+      <AiChat
+        text="sadgadgadgadgdgadgdgagddgadgdagdgadgdgadg"
+        date={formattedDate}
+      />
       <S.InputContainer>
         <S.ChatView
           placeholder="채팅을 입력해 주세요."

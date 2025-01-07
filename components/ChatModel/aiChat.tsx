@@ -2,13 +2,17 @@ import { StyleSheet, Text, View, Image } from "react-native";
 
 interface ChatProps {
   text: string;
+  date: string;
 }
 
-export default function AiChat({ text }: ChatProps) {
+export default function AiChat({ text, date }: ChatProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.time}>12:10</Text>
+      <Text style={styles.time}>{date}</Text>
       <Text style={styles.chat}>{text}</Text>
+      <View style={styles.user}>
+        <Text>AI</Text>
+      </View>
       <View style={styles.tale}>
         <Image source={require("../../assets/images/AiChatTale.png")} />
       </View>
@@ -27,7 +31,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 20,
     position: "relative",
-    right: "30%",
+    left: "12%",
+    maxWidth: "60%",
+    marginBottom: 20,
+    alignSelf: "flex-start",
   },
   time: {
     position: "absolute",
@@ -37,11 +44,27 @@ const styles = StyleSheet.create({
   },
   chat: {
     fontSize: 12,
+    textAlign: "left",
+    flexShrink: 1,
+    flexWrap: "wrap",
     color: "white",
   },
   tale: {
     position: "absolute",
     bottom: -4,
     left: 0,
+  },
+  user: {
+    width: 30,
+    height: 30,
+    backgroundColor: "white",
+    borderRadius: 50,
+    position: "absolute",
+    bottom: -20,
+    left: "-17%",
+    borderColor: "#D9D9D9",
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
