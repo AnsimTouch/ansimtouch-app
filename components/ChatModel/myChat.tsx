@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 20,
     position: "relative",
+    maxWidth: "50%",
   },
   chat: {
     fontSize: 12,
