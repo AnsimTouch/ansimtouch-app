@@ -1,3 +1,4 @@
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
 export const Box = styled.View`
@@ -42,6 +43,32 @@ export const BoxContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 11px;
-
   margin-top: 10px;
+`;
+
+export const CheckBoxContainer = styled.View`
+  width: 100%;
+  margin-top: 11px;
+  padding: 25px 63px 40px 63px;
+  background-color: #ecf4ff;
+  border-radius: 5px;
+`;
+
+export const CheckBoxWrapper = styled.View`
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+export const CheckButton = styled(TouchableOpacity)`
+  background-color: #2882ff;
+  padding: 15px 60px;
+  border-radius: 5px;
+  align-items: center;
+  margin-top: 18px;
+`;
+
+export const CheckButtonText = styled.Text`
+  color: white;
+  font-size: 20px;
 `;
