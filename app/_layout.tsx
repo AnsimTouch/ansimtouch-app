@@ -1,13 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import Login from "./(tabs)/login";
-import Register from "./(tabs)/register";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
-import ForgotPassword from "./(tabs)/forgotPassword";
-import Profile from "./(tabs)/profile";
+import Profile from "./(tabs)/Profile";
+import ForgotPassword from "./(tabs)/ForgotPassword";
+import Register from "./(tabs)/Register";
+import Login from "./(tabs)/Login";
 
 const Stack = createStackNavigator();
 
