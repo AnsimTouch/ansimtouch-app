@@ -6,8 +6,8 @@ import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
-import ForgotPassword from "./(tabs)/ForgotPassword";
-import Profile from "./(tabs)/Profile";
+import ForgotPassword from "./(tabs)/forgotPassword";
+import Profile from "./(tabs)/profile";
 
 const Stack = createStackNavigator();
 
