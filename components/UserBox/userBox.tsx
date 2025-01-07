@@ -3,9 +3,10 @@ import { StyleSheet, View, Text } from "react-native";
 interface UserProps {
   name: string;
   number: string;
+  state: string;
 }
 
-export default function UserBox({ name, number }: UserProps) {
+export default function UserBox({ name, number, state }: UserProps) {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -13,7 +14,14 @@ export default function UserBox({ name, number }: UserProps) {
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.number}>{number}</Text>
         </View>
-        <Text>현재 접속중</Text>
+        <Text
+          style={{
+            color: state === "현재 접속 중" ? "#2882FF" : "#4C4C4C",
+            fontWeight: 600,
+          }}
+        >
+          {state}
+        </Text>
       </View>
     </View>
   );
@@ -31,9 +39,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
+    fontWeight: 700,
   },
   number: {
     fontSize: 14,
+    color: "#4C4C4C",
   },
   wrapper: {
     width: "90%",

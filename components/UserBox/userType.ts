@@ -2,4 +2,5 @@ export interface UserType {
   id: string;
   name: string;
   number: string;
+  state: string;
 }

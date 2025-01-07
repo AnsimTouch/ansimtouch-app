@@ -13,7 +13,7 @@ import Nav from "@/components/Nav/nav";
 import UserBox from "@/components/UserBox/userBox";
 import { UserType } from "@/components/UserBox/userType";
 import {
-  Swipeable,
+  Swipeable, // 줄 그어지는 거 무시
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import SelectModal from "@/components/Modal/modal";
@@ -24,13 +24,13 @@ type RootStackParamList = {
 };
 
 const userList: UserType[] = [
-  { id: "1", name: "이름", number: "01012345678" },
-  { id: "2", name: "이름", number: "01012345678" },
-  { id: "3", name: "이름", number: "01012345678" },
-  { id: "4", name: "이름", number: "01012345678" },
-  { id: "5", name: "이름", number: "01012345678" },
-  { id: "6", name: "이름", number: "01012345678" },
-  { id: "7", name: "이름", number: "01012345678" },
+  { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "2", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "4", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "5", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "6", name: "이름", number: "01012345678", state: "현재 접속 중" },
+  { id: "7", name: "이름", number: "01012345678", state: "현재 접속 중" },
 ];
 
 export default function User() {
@@ -43,16 +43,17 @@ export default function User() {
   };
 
   const renderRightActions = (
+    // 옆으로 당기면 삭제
     dragX: Animated.AnimatedInterpolation<number>,
     name: string
   ) => {
     const trans = dragX.interpolate({
       inputRange: [0, 50, 100, 101],
-      outputRange: [0, 0, 0, 1],
+      outputRange: [0, 0, 0, 1], // 얼마나 당겨지는지
     });
     return (
       <Pressable onPress={() => onPressModalOpen(name)}>
-        <Animated.View
+        <Animated.View // 당겼을 때 나오는 뷰
           style={[
             styles.delete,
             {
@@ -82,12 +83,16 @@ export default function User() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <GestureHandlerRootView>
-              <Swipeable
+              <Swipeable // 줄 그어지는 거 무시
                 renderRightActions={(dragX) =>
                   renderRightActions(dragX, item.name)
                 }
               >
-                <UserBox name={item.name} number={item.number} />
+                <UserBox
+                  name={item.name}
+                  number={item.number}
+                  state={item.state}
+                />
               </Swipeable>
             </GestureHandlerRootView>
           )}

@@ -7,13 +7,13 @@ import { UserType } from "@/components/UserBox/userType";
 
 export default function AddUser() {
   const userList: UserType[] = [
-    { id: "1", name: "이름", number: "01012345678" },
-    { id: "2", name: "이름", number: "01012345678" },
-    { id: "3", name: "이름", number: "01012345678" },
-    { id: "4", name: "이름", number: "01012345678" },
-    { id: "5", name: "이름", number: "01012345678" },
-    { id: "6", name: "이름", number: "01012345678" },
-    { id: "7", name: "이름", number: "01012345678" },
+    { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
+    { id: "2", name: "이름", number: "01012345678", state: "7시간 전" },
+    { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },
+    { id: "4", name: "이름", number: "01012345678", state: "현재 접속 중" },
+    { id: "5", name: "이름", number: "01012345678", state: "현재 접속 중" },
+    { id: "6", name: "이름", number: "01012345678", state: "현재 접속 중" },
+    { id: "7", name: "이름", number: "01012345678", state: "현재 접속 중" },
   ];
 
   const [number, setNumber] = useState<string>();
@@ -42,7 +42,7 @@ export default function AddUser() {
           data={userList}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <UserBox name={item.name} number={item.number} />
+            <UserBox name={item.name} number={item.number} state={item.state} />
           )}
         />
       </S.MainWrapper>
