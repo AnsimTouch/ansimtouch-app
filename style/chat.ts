@@ -21,11 +21,13 @@ export const Container = styled.SafeAreaView`
 
 export const InputContainer = styled.View`
   width: 100%;
-  height: 20%;
+  height: auto; /* 동적 높이 적용 */
+  min-height: 20%;
   background-color: white;
   position: absolute;
   bottom: 0;
-  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const ChatView = styled.TextInput`

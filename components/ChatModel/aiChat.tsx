@@ -6,9 +6,10 @@ interface ChatProps {
 }
 
 export default function AiChat({ text, date }: ChatProps) {
+  const formattedDate = date.slice(11, 16);
   return (
     <View style={styles.container}>
-      <Text style={styles.time}>{date}</Text>
+      <Text style={styles.time}>{formattedDate}</Text>
       <Text style={styles.chat}>{text}</Text>
       <View style={styles.user}>
         <Text>AI</Text>
