@@ -22,6 +22,7 @@ export default function Chat() {
     "eyJhbGciOiJIUzM4NCJ9.eyJpZCI6NCwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTczNjMwMDA3OCwiZXhwIjoxNzM2MzAzNjc4fQ.djYVchRikHBYIDTddSKAxzmKoV-syMxKCHuWcPQSmLLEvIzj66391pdD6ix9vxO8";
   const [chatList, setChatList] = useState<any[]>([]);
   const [chat, setChat] = useState<string>("");
+  const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
 
   const postChat = async () => {
     try {
@@ -66,10 +67,6 @@ export default function Chat() {
     setChat(e.nativeEvent.text);
   };
 
-  useEffect(() => {
-    getChat();
-  }, []);
-
   const renderItem = ({ item }: { item: any }) => {
     // 채팅 랜더림ㅇ
     return item.role === "assistant" ? (
@@ -79,16 +76,37 @@ export default function Chat() {
     );
   };
 
+  useEffect(() => {
+    const didShow = Keyboard.addListener("keyboardWillShow", () =>
+      setKeyboardVisible(true)
+    );
+    const didHide = Keyboard.addListener("keyboardWillHide", () =>
+      setKeyboardVisible(false)
+    );
+    return () => {
+      didShow.remove();
+      didHide.remove();
+    };
+  });
+
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, height: "100%" }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{
+        flex: 1,
+        height: "100%",
+        marginBottom: isKeyboardVisible ? "80%" : "0%",
+      }}
       keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
       <S.Container>
         <Nav title="채팅하기" router="Home" />
         <FlatList
-          style={{ flex: 1, width: "100%", height: "100%" }}
+          style={{
+            flex: 1,
+            width: "100%",
+            height: "100%",
+            marginBottom: "40%",
+          }}
           data={chatList}
           renderItem={renderItem}
           inverted={true}

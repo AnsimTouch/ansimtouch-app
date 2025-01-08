@@ -21,7 +21,7 @@ export const Container = styled.SafeAreaView`
 
 export const InputContainer = styled.View`
   width: 100%;
-  height: auto; /* 동적 높이 적용 */
+  height: auto;
   min-height: 20%;
   background-color: white;
   position: absolute;
@@ -35,8 +35,6 @@ export const ChatView = styled.TextInput`
   height: 100%;
   padding-left: 10%;
   padding-right: 10%;
-  position: absolute;
-  align-self: flex-start;
   margin-top: 2%;
 `;
 
