@@ -34,7 +34,7 @@ export const NavImage = styled(Box)`
 `;
 
 export const MainWrapper = styled(Box)`
-  width: 80%;
+  width: 90%;
   align-items: flex-start;
 `;
 
