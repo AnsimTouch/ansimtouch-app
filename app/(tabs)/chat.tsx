@@ -11,7 +11,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
   NativeSyntheticEvent,
   TextInputChangeEventData,
   FlatList, // FlatList 추가
@@ -19,7 +18,7 @@ import {
 
 export default function Chat() {
   const accessToken =
-    "eyJhbGciOiJIUzM4NCJ9.eyJpZCI6NCwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTczNjMwMDA3OCwiZXhwIjoxNzM2MzAzNjc4fQ.djYVchRikHBYIDTddSKAxzmKoV-syMxKCHuWcPQSmLLEvIzj66391pdD6ix9vxO8";
+    "eyJhbGciOiJIUzM4NCJ9.eyJpZCI6NCwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTczNjMwNjQ1NiwiZXhwIjoxNzM2MzEwMDU2fQ.TCmp-ajN1boqM730bHK3gJrLekGhc55AWF5734BV8qXW2W_7wVUrRhNOUjYP5-cd";
   const [chatList, setChatList] = useState<any[]>([]);
   const [chat, setChat] = useState<string>("");
   const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
@@ -89,6 +88,12 @@ export default function Chat() {
     };
   });
 
+  useEffect(() => {
+    if (chatList.length === 0) {
+      getChat();
+    }
+  });
+
   return (
     <KeyboardAvoidingView
       style={{
@@ -109,7 +114,6 @@ export default function Chat() {
           }}
           data={chatList}
           renderItem={renderItem}
-          inverted={true}
           keyboardShouldPersistTaps="handled"
         />
         {/* 입력창 */}
