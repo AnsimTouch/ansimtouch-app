@@ -6,6 +6,8 @@ import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/auth";
 import * as S from "../../style/auth";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { SERVER_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type RootStackParamList = {
   Login: undefined;
@@ -27,20 +29,26 @@ export default function Login() {
     if (phone && password) {
       setIsLoading(true);
       try {
-        const response = await axios.post(`https://${apiKey}/login`, {
-          phone,
-          password,
+        const response = await axios.post(`${SERVER_URL}/auth/login`, {
+          tel: phone,
+          password: password,
         });
         if (response.status === 200) {
           setIsLoading(false);
           setModalMessage("로그인 성공!");
           setIsModalVisible(true);
+          await AsyncStorage.setItem("ACCESS_TOKEN", response.data.accessToken);
+          await AsyncStorage.setItem(
+            "ACCESS_TOKEN",
+            response.data.refreshToken
+          );
           // setTimeout(() => navigation.navigate("Home"), 2000); // 로그인 성공 후 홈 화면으로 이동
         }
       } catch (error) {
         setIsLoading(false);
         setModalMessage("로그인 실패! 다시 시도해주세요.");
         setIsModalVisible(true);
+        console.log(error);
       }
     } else {
       setErrorMessage("모든 필드를 입력하세요.");
