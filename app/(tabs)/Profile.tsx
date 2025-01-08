@@ -3,6 +3,15 @@ import axios from "axios";
 import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/profile";
 import styled from "styled-components/native";
+import { SERVER_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+interface userData {
+  id: number;
+  username: string;
+  tel: string;
+  userType: string;
+}
 
 export default function Profile() {
   const [profileImage, setProfileImage] = useState<string>("");
@@ -13,30 +22,25 @@ export default function Profile() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
   const [modalData, setModalData] = useState<string>("");
-
+  const [userData, setUserData] = useState<userData | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const apiUrl = "fds"; // 임시
+  const fetchUserProfile = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const response = await axios.get(`${SERVER_URL}/user/me`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (response) {
+        setUserData(response.data);
+        console.log("성공");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/profile`, {
-          headers: { Authorization: `Bearer ${process.env.REACT_APP_API_KEY}` },
-        });
-        const { profileImage, name, role, phone, attendanceTime } =
-          response.data;
-        setProfileImage(profileImage);
-        setName(name);
-        setRole(role);
-        setPhone(phone);
-        setAttendanceTime(attendanceTime);
-      } catch (error) {
-        console.error(error);
-        setErrorMessage("프로필 정보를 불러오지 못했습니다.");
-      }
-    };
-
     fetchUserProfile();
   }, []);
 
@@ -71,7 +75,7 @@ export default function Profile() {
           return;
       }
 
-      await axios.put(`${apiUrl}/update-profile`, updateField, {
+      await axios.put(`${SERVER_URL}/update-profile`, updateField, {
         headers: { Authorization: `Bearer ${process.env.REACT_APP_API_KEY}` },
       });
       closeModal();
@@ -84,7 +88,7 @@ export default function Profile() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `${apiUrl}/logout`,
+        `${SERVER_URL}/logout`,
         {},
         {
           headers: {
@@ -116,8 +120,14 @@ export default function Profile() {
 
       <MainWrapper>
         <ProfileImage source={{ uri: profileImage }} />
-        <Name>{name}</Name>
-        <Role>{role}</Role>
+        {userData && (
+          <>
+            <Name>{userData.username}</Name>
+            <Role>
+              {userData.userType === "Protector" ? "보호자" : "관리대상자"}
+            </Role>
+          </>
+        )}
 
         <Section>
           <SectionTitle>정보 및 기능 수정</SectionTitle>
@@ -190,7 +200,7 @@ const Section = styled.View`
 `;
 
 const SectionTitle = styled.Text`
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 11px;
 `;
@@ -210,7 +220,7 @@ const Box = styled.TouchableOpacity`
 `;
 
 const BoxText = styled.Text`
-  font-size: 1rem;
+  font-size: 16px;
   color: #141414;
 `;
 
@@ -229,7 +239,7 @@ const LogoutBox = styled.TouchableOpacity`
 `;
 
 const LogoutBoxText = styled.Text`
-  font-size: 1rem;
+  font-size: 16px;
   color: #ff4d4d;
 `;
 

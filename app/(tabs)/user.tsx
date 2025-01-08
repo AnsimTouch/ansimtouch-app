@@ -11,7 +11,7 @@ import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
 import UserBox from "@/components/UserBox/userBox";
-import { UserType } from "@/components/UserBox/userType";
+import { userType } from "@/components/UserBox/userType";
 import {
   Swipeable,
   GestureHandlerRootView,
@@ -23,7 +23,7 @@ type RootStackParamList = {
   AddUser: undefined;
 };
 
-const userList: UserType[] = [
+const userList: userType[] = [
   { id: "1", name: "이름", number: "010-1234-5678" },
   { id: "2", name: "이름", number: "010-1234-5678" },
   { id: "3", name: "이름", number: "010-1234-5678" },

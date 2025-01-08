@@ -35,12 +35,15 @@ export default function Login() {
           setIsLoading(false);
           setModalMessage("로그인 성공!");
           setIsModalVisible(true);
-          await AsyncStorage.setItem("ACCESS_TOKEN", response.data.accessToken);
           await AsyncStorage.setItem(
-            "ACCESS_TOKEN",
-            response.data.refreshToken
+            "accessToken",
+            response.data.data.accessToken
           );
-          // setTimeout(() => navigation.navigate("Home"), 2000); // 로그인 성공 후 홈 화면으로 이동
+          await AsyncStorage.setItem(
+            "refreshToken",
+            response.data.data.refreshToken
+          );
+          setTimeout(() => navigation.navigate("Profile"), 2000); // 로그인 성공 후 홈 화면으로 이동
         }
       } catch (error) {
         setIsLoading(false);
