@@ -2,27 +2,31 @@ import styled from "styled-components/native";
 
 export const AuthContainer = styled.SafeAreaView`
   background-color: #fbfdff;
-  flex: 1;
-  margin: 0;
-  padding: 1rem;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
-export const MainWrapper = styled.View``;
+export const MainWrapper = styled.View`
+  width: 90%;
+`;
 
 export const Title = styled.Text`
-  font-size: 1.75rem;
+  font-size: 28px;
   color: #2882ff;
+  font-weight: 700;
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 1.125rem;
-  margin-bottom: 1.25rem;
+  font-size: 18px;
+  margin-bottom: 1%;
 `;
 
 export const Input = styled.TextInput`
   width: 100%;
-  height: 3.125rem;
+  height: 50px;
   font-size: 12px;
 
   background-color: #ffffff;
@@ -49,6 +53,13 @@ export const PhoneButton = styled.TouchableOpacity`
 `;
 
 export const Link = styled.TouchableOpacity`
+  width: 90%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 1%;
+`;
+
+export const LinkText = styled.Text`
   color: #2882ff;
   font-size: 12px;
   text-align: end;
@@ -68,7 +79,7 @@ export const Button = styled.Pressable`
   align-items: center;
 
   position: absolute;
-  bottom: 20px;
+  bottom: 70px;
   left: 0;
   right: 0;
   margin: 0 20px;
@@ -76,6 +87,6 @@ export const Button = styled.Pressable`
 
 export const ButtonText = styled.Text`
   color: #fff;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
 `;
