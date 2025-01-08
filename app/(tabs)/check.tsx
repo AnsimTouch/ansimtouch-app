@@ -32,9 +32,16 @@ export default function Check() {
                   ? require("../../assets/images/Checked.png")
                   : require("../../assets/images/Unchecked.png")
               }
-              style={{ width: 100, height: 100 }}
+              style={{ width: 100, height: 100, marginBottom: 20 }}
             />
-            <Text style={{ fontSize: 20, color: "#333" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#333",
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
               {isChecked
                 ? "출석체크가 완료되었습니다."
                 : "오늘 출석체크를 하지 않았습니다."}

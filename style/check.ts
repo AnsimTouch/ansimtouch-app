@@ -62,7 +62,9 @@ export const CheckBoxWrapper = styled.View`
 
 export const CheckButton = styled(TouchableOpacity)`
   background-color: #2882ff;
-  padding: 15px 60px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border-radius: 5px;
   align-items: center;
   margin-top: 18px;
@@ -71,4 +73,5 @@ export const CheckButton = styled(TouchableOpacity)`
 export const CheckButtonText = styled.Text`
   color: white;
   font-size: 20px;
+  font-weight: 700;
 `;

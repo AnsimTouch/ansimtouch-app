@@ -32,7 +32,7 @@ const Box: React.FC<BoxProps> = ({
     <Container backgroundColor={backgroundColor} onPress={handlePress}>
       <Icon source={iconSource} />
       <TextWrapper>
-        <Title isAlert={title === "긴급 알림" || title === "채팅하기기"}>
+        <Title isAlert={title === "긴급 알림" || title === "채팅하기"}>
           {title}
         </Title>
         <Content
@@ -53,16 +53,14 @@ const Box: React.FC<BoxProps> = ({
 const Container = styled.TouchableOpacity<{ backgroundColor: string }>`
   flex-direction: row;
   align-items: center;
-  width: 23.125rem;
-  padding: 2rem 1.75rem;
+  width: 100%;
+  padding: 35px 20px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 5px;
   overflow: hidden;
 `;
 
 const Icon = styled.Image`
-  width: 10rem;
-  height: 10rem;
   position: absolute;
   border-radius: 25px;
   margin-right: 16px;
@@ -74,15 +72,15 @@ const TextWrapper = styled.View`
 `;
 
 const Title = styled.Text<{ isAlert: boolean }>`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 700;
   color: ${({ isAlert }) => (isAlert ? "#FFFFFF" : "#141414")};
 `;
 
 const Content = styled.Text<{ isAlert: boolean }>`
   font-size: 14px;
+  font-weight: 500;
   color: #4c4c4c;
-  margin-top: 4px;
   color: ${({ isAlert }) => (isAlert ? "#FFFFFF" : "#141414")};
 `;
 

@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Alarm"
         component={Alarm}

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   title: {
-    fontSize: 22,
+    fontSize: 32,
     fontWeight: "bold",
     color: "black",
   },
