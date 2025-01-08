@@ -131,7 +131,7 @@ export default function Register() {
             style={{ flex: 1 }}
           ></S.Input>
           <S.PhoneButton onPress={onRequestVerification}>
-            인증하기
+            <S.PhoneText>인증하기</S.PhoneText>
           </S.PhoneButton>
         </S.PhoneInputWrapper>
         {isVerificationStarted && (
@@ -156,9 +156,9 @@ export default function Register() {
           label="대상자로 가입"
         />
 
-        <S.Link onPress={() => navigation.navigate("Login")}>
-          이미 아이디가 있으신가요?
-        </S.Link>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <S.LinkText>이미 아이디가 있으신가요?</S.LinkText>
+        </TouchableOpacity>
       </CheckboxWrapper>
 
       {errorMessage ? <S.ErrorMessage>{errorMessage}</S.ErrorMessage> : null}
@@ -178,10 +178,11 @@ export default function Register() {
 }
 
 const CheckboxWrapper = styled.View`
+  width: 90%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
   margin-bottom: 10px;
 `;
 

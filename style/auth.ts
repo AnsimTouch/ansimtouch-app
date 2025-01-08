@@ -49,6 +49,9 @@ export const PhoneButton = styled.TouchableOpacity`
   padding: 10px 15px;
   border-radius: 5px;
   margin-left: 10px;
+`;
+
+export const PhoneText = styled.Text`
   color: #2882ff;
 `;
 
@@ -62,7 +65,6 @@ export const Link = styled.TouchableOpacity`
 export const LinkText = styled.Text`
   color: #2882ff;
   font-size: 12px;
-  text-align: end;
 `;
 
 export const ErrorMessage = styled.Text`
