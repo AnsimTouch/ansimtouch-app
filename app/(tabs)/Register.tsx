@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -7,6 +7,7 @@ import SelectModal from "@/components/Modal/auth";
 import * as S from "../../style/auth";
 import styled from "styled-components/native";
 import { TouchableOpacity } from "react-native";
+import { SERVER_URL } from "@env";
 
 type RootStackParamList = {
   Login: undefined;
@@ -27,12 +28,11 @@ export default function Register() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
   const [isParent, setIsParent] = useState<boolean>(true);
+  const [isVerify, setIsVerify] = useState<boolean>(true);
 
   const handleCheckboxChange = (value: boolean) => {
     setIsParent(value);
   };
-
-  const apiKey = "skjdklas"; // 임시 API 키
 
   const onRegister = async () => {
     if (
@@ -52,22 +52,27 @@ export default function Register() {
     }
 
     setIsLoading(true);
-    try {
-      const response = await axios.post(`https://${apiKey}/register`, {
-        name,
-        password,
-        phoneNumber,
-        verificationCode,
-      });
-      if (response.status === 200) {
+    if (isVerify) {
+      try {
+        const response = await axios.post(`${SERVER_URL}/auth/sign-up`, {
+          username: name,
+          tel: phoneNumber,
+          password: password,
+          userType: isParent ? "Protector" : "Ward",
+        });
+        if (response.status === 200) {
+          setIsLoading(false);
+          setModalMessage("회원가입 성공!");
+          setIsModalVisible(true);
+          setTimeout(() => navigation.navigate("Login"), 2000);
+        }
+      } catch (error) {
         setIsLoading(false);
-        setModalMessage("회원가입 성공!");
+        setModalMessage("회원가입 실패! 다시 시도해 주세요.");
         setIsModalVisible(true);
-        setTimeout(() => navigation.navigate("Login"), 2000);
       }
-    } catch (error) {
-      setIsLoading(false);
-      setModalMessage("회원가입 실패! 다시 시도해주세요.");
+    } else {
+      setModalMessage("전화번호 인증을 진행해 주세요.");
       setIsModalVisible(true);
     }
   };
@@ -82,7 +87,7 @@ export default function Register() {
     setIsVerificationStarted(true);
 
     axios
-      .post(`https://${apiKey}/send-verification-code`, { phoneNumber })
+      .post(`${SERVER_URL}/verify/send`, { tel: phoneNumber })
       .then(() => {
         setModalMessage("인증 코드가 발송되었습니다.");
         setIsModalVisible(true);
@@ -91,6 +96,23 @@ export default function Register() {
         setModalMessage("인증 코드 발송에 실패했습니다. 다시 시도해주세요.");
         setIsModalVisible(true);
       });
+  };
+
+  const onCheckCode = async () => {
+    try {
+      const response = await axios.post(`${SERVER_URL}/verify/check`, {
+        tel: phoneNumber,
+        code: verificationCode,
+      });
+      if (response.status === 200) {
+        setIsVerify(true);
+        console.log("인증 성공");
+        setModalMessage("인증에 성공했습니다.");
+        setIsModalVisible(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -129,18 +151,24 @@ export default function Register() {
             onChangeText={setPhoneNumber}
             keyboardType="numeric"
             style={{ flex: 1 }}
+            maxLength={11}
           ></S.Input>
           <S.PhoneButton onPress={onRequestVerification}>
             <S.PhoneText>인증하기</S.PhoneText>
           </S.PhoneButton>
         </S.PhoneInputWrapper>
         {isVerificationStarted && (
-          <S.Input
-            placeholder="인증코드를 입력해주세요."
-            placeholderTextColor="#4C4C4C"
-            value={verificationCode}
-            onChangeText={setVerificationCode}
-          />
+          <S.PhoneInputWrapper>
+            <S.Input
+              placeholder="인증코드를 입력해주세요."
+              placeholderTextColor="#4C4C4C"
+              value={verificationCode}
+              onChangeText={setVerificationCode}
+            />
+            <S.PhoneButton onPress={onCheckCode}>
+              <S.PhoneText>인증하기</S.PhoneText>
+            </S.PhoneButton>
+          </S.PhoneInputWrapper>
         )}
       </S.MainWrapper>
 

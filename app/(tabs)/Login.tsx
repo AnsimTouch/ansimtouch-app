@@ -23,8 +23,6 @@ export default function Login() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
 
-  const apiKey = "skjdklas"; // 임시 API 키
-
   const onLogin = async () => {
     if (phone && password) {
       setIsLoading(true);
