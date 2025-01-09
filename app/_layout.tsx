@@ -6,6 +6,9 @@ import Emergency from "./(tabs)/emergency";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
 import Chat from "./(tabs)/chat";
+import Home from "./(tabs)/home";
+import Check from "./(tabs)/check";
+import Alarm from "./(tabs)/Alarm";
 const Stack = createStackNavigator();
 import { AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
@@ -101,6 +104,21 @@ export default function RootLayout() {
       <Stack.Screen
         name="Chat"
         component={Chat}
+                options={{ headerShown: false }}
+        />
+      <Stack.Screen
+        name="Alarm"
+        component={Alarm}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Check"
+        component={Check}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
