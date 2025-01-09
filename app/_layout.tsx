@@ -52,6 +52,16 @@ export default function RootLayout() {
         component={Emergency}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="AddUser"
+        component={AddUser}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="User"
+        component={User}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
