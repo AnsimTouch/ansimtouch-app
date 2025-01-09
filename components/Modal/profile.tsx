@@ -31,7 +31,9 @@ const Title = styled.Text`
   margin-bottom: 10px;
 `;
 
-const Input = styled.TextInput`
+const Input = styled.TextInput.attrs({
+  placeholderTextColor: "#4C4C4C",
+})`
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;

@@ -90,7 +90,7 @@ export default function Profile() {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   return (
     <AuthContainer>

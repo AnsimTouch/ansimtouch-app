@@ -1,14 +1,16 @@
 import * as S from "../../style/taxi";
 import Nav from "@/components/Nav/nav";
 import Map from "@/components/Map/map";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { SERVER_URL } from "@env";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useGetMe } from "@/hooks/useGetMe";
 
 export default function Taxi() {
   const [locationName, setLocationName] = useState<string>("");
+  const { user, fetchUser } = useGetMe();
   const [region, setRegion] = useState({
     latitude: 37.541,
     longitude: 126.986,
@@ -16,11 +18,11 @@ export default function Taxi() {
 
   const onTaxiRequest = async () => {
     try {
-      const accessToken = AsyncStorage.getItem("accessToken");
+      const accessToken = await AsyncStorage.getItem("accessToken");
       const response = await axios.post(
         `${SERVER_URL}/taxi/request`,
         {
-          wardUserId: 1,
+          wardUserId: user?.id,
           latitude: region.latitude,
           longitude: region.longitude,
         },
@@ -38,6 +40,10 @@ export default function Taxi() {
       Alert.alert("오류", "택시 호출에 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return (
     <S.Container>

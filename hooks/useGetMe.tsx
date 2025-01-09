@@ -21,14 +21,11 @@ export const useGetMe = create<GetMeState>((set) => ({
   setUser: (user) => set({ user }),
   fetchUser: async () => {
     const accessToken = await AsyncStorage.getItem("accessToken");
-    console.log(accessToken);
     try {
       const res = await axios.get(`${SERVER_URL}/user/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log("Response:", res);
       if (res) {
-        console.log("들고옴");
         set({ user: res.data });
       }
     } catch (error) {
