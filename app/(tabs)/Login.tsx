@@ -43,7 +43,7 @@ export default function Login() {
             "refreshToken",
             response.data.data.refreshToken
           );
-          setTimeout(() => navigation.navigate("Taxi"), 2000); // 로그인 성공 후 홈 화면으로 이동
+          setTimeout(() => navigation.navigate("Chat"), 1000); // 로그인 성공 후 홈 화면으로 이동
         }
       } catch (error) {
         setIsLoading(false);

@@ -30,7 +30,9 @@ export const InputContainer = styled.View`
   align-items: center;
 `;
 
-export const ChatView = styled.TextInput`
+export const ChatView = styled.TextInput.attrs({
+  placeholderTextColor: "#4C4C4C",
+})`
   width: 90%;
   height: 100%;
   padding-left: 10%;

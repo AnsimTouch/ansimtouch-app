@@ -5,7 +5,7 @@ import AiChat from "@/components/ChatModel/aiChat";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "@env";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
   Keyboard,
@@ -15,7 +15,6 @@ import {
   TextInputChangeEventData,
   FlatList, // FlatList 추가
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Chat() {
   const [chatList, setChatList] = useState<any[]>([]);
@@ -24,7 +23,7 @@ export default function Chat() {
 
   const postChat = async () => {
     try {
-      const accessToken = AsyncStorage.getItem("accessToken");
+      const accessToken = await AsyncStorage.getItem("accessToken");
       const res = await axios.post(
         `${SERVER_URL}/chat/send`,
         { message: chat },
@@ -45,7 +44,7 @@ export default function Chat() {
 
   const getChat = async () => {
     try {
-      const accessToken = AsyncStorage.getItem("accessToken");
+      const accessToken = await AsyncStorage.getItem("accessToken");
       const res = await axios.get(`${SERVER_URL}/chat/history`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -53,6 +52,7 @@ export default function Chat() {
       });
       if (res) {
         setChatList(res.data);
+        console.log("안녕")
       }
     } catch (e) {
       console.error("받기 실패", e);
