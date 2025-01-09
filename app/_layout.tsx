@@ -6,6 +6,8 @@ import Emergency from "./(tabs)/emergency";
 
 const Stack = createStackNavigator();
 import { Alert, AppState, AppStateStatus } from "react-native";
+import AddUser from "./(tabs)/addUser";
+import User from "./(tabs)/user";
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -16,10 +18,8 @@ export default function RootLayout() {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         console.log("앱이 포어그라운드로 전환됨");
-        Alert.alert("앱이 백그라운드로 전니다");
       } else if (nextAppState === "background") {
         console.log("앱이 백그라운드로 전환됨");
-        Alert.alert("앱이 백그라운드로 전환되었습니다");
       }
       setAppState(nextAppState);
     };

@@ -2,8 +2,8 @@ import { useState } from "react";
 import * as S from "../../style/user";
 import Nav from "@/components/Nav/nav";
 import { Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import UserBox from "@/components/UserBox/userBox";
 import { UserType } from "@/components/UserBox/userType";
+import UserBox from "@/components/UserBox/userBox";
 
 export default function AddUser() {
   const userList: UserType[] = [
