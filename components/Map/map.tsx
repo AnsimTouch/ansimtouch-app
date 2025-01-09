@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 
 interface locationProps {
@@ -9,18 +9,20 @@ interface locationProps {
 
 interface mapProps {
   setLocationName?: (name: string) => void;
+  setRegion?: (region: Region) => void;
 }
 
-export default function Map({ setLocationName }: mapProps) {
-  const [region, setRegion] = useState<Region>({
+export default function Map({ setLocationName, setRegion }: mapProps) {
+  const [region, localSetRegion] = useState<Region>({
     latitude: 37.541,
     longitude: 126.986,
-    latitudeDelta: 0.000001,
-    longitudeDelta: 0.001,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
   });
 
   const changeRegion = (newRegion: Region) => {
-    setRegion(newRegion);
+    localSetRegion(newRegion);
+    setRegion?.(newRegion);
   };
 
   const fetchLocationName = async ({ latitude, longitude }: locationProps) => {
@@ -37,7 +39,10 @@ export default function Map({ setLocationName }: mapProps) {
       } else {
         setLocationName?.("알 수 없는 위치");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("주소 가져오기 실패:", error);
+      setLocationName?.("주소를 가져오는 데 실패했습니다.");
+    }
   };
 
   useEffect(() => {

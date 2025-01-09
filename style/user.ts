@@ -30,6 +30,7 @@ export const MenuTable = styled(Box)`
 
 export const Title = styled.Text`
   font-size: 24px;
+  font-weight: 700;
 `;
 
 export const UserButton = styled.TouchableOpacity`
@@ -48,7 +49,9 @@ export const SearchView = styled.View`
   margin-bottom: 19px;
 `;
 
-export const Search = styled.TextInput`
+export const Search = styled.TextInput.attrs({
+  placeholderTextColor: "#4C4C4C",
+})`
   border: 1px solid #ededed;
   border-radius: 5px;
   padding-left: 20px;
