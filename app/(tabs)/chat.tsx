@@ -15,16 +15,16 @@ import {
   TextInputChangeEventData,
   FlatList, // FlatList 추가
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Chat() {
-  const accessToken =
-    "eyJhbGciOiJIUzM4NCJ9.eyJpZCI6NCwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTczNjMwNjQ1NiwiZXhwIjoxNzM2MzEwMDU2fQ.TCmp-ajN1boqM730bHK3gJrLekGhc55AWF5734BV8qXW2W_7wVUrRhNOUjYP5-cd";
   const [chatList, setChatList] = useState<any[]>([]);
   const [chat, setChat] = useState<string>("");
   const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
 
   const postChat = async () => {
     try {
+      const accessToken = AsyncStorage.getItem("accessToken");
       const res = await axios.post(
         `${SERVER_URL}/chat/send`,
         { message: chat },
@@ -45,14 +45,13 @@ export default function Chat() {
 
   const getChat = async () => {
     try {
-      console.log(`${SERVER_URL}`);
+      const accessToken = AsyncStorage.getItem("accessToken");
       const res = await axios.get(`${SERVER_URL}/chat/history`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
       if (res) {
-        console.log("성공");
         setChatList(res.data);
       }
     } catch (e) {

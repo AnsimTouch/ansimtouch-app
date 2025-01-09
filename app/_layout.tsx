@@ -7,13 +7,13 @@ import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
 import Chat from "./(tabs)/chat";
 const Stack = createStackNavigator();
-import { Alert, AppState, AppStateStatus } from "react-native";
+import { AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
-import Profile from "./(tabs)/profile";
-import Register from "./(tabs)/register";
-import Login from "./(tabs)/login";
-import ForgotPassword from "./(tabs)/forgotPassword";
+import Profile from "./(tabs)/Profile";
+import Register from "./(tabs)/Register";
+import Login from "./(tabs)/Login";
+import ForgotPassword from "./(tabs)/ForgotPassword";
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -96,6 +96,8 @@ export default function RootLayout() {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Chat"
         component={Chat}
