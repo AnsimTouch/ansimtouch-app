@@ -11,7 +11,7 @@ import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Nav from "@/components/Nav/nav";
 import UserBox from "@/components/UserBox/userBox";
-import { UserType } from "@/components/UserBox/userType";
+import { userType } from "@/components/UserBox/userType";
 import {
   Swipeable, // 줄 그어지는 거 무시
   GestureHandlerRootView,
