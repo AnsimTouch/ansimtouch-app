@@ -5,6 +5,7 @@ import Taxi from "./(tabs)/taxi";
 import Emergency from "./(tabs)/emergency";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
+import Chat from "./(tabs)/chat";
 const Stack = createStackNavigator();
 import { Alert, AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
@@ -95,6 +96,9 @@ export default function RootLayout() {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
