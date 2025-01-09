@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "@env";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Taxi() {
   const [locationName, setLocationName] = useState<string>("");
@@ -15,6 +16,7 @@ export default function Taxi() {
 
   const onTaxiRequest = async () => {
     try {
+      const accessToken = AsyncStorage.getItem("accessToken");
       const response = await axios.post(
         `${SERVER_URL}/taxi/request`,
         {

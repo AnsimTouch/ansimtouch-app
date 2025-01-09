@@ -4,14 +4,7 @@ import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/profile";
 import styled from "styled-components/native";
 import { SERVER_URL } from "@env";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-interface userData {
-  id: number;
-  username: string;
-  tel: string;
-  userType: string;
-}
+import { useGetMe } from "@/hooks/useGetMe";
 
 export default function Profile() {
   const [profileImage, setProfileImage] = useState<string>("");
@@ -22,27 +15,8 @@ export default function Profile() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
   const [modalData, setModalData] = useState<string>("");
-  const [userData, setUserData] = useState<userData | null>(null);
+  const { user, fetchUser } = useGetMe();
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const fetchUserProfile = async () => {
-    try {
-      const accessToken = await AsyncStorage.getItem("accessToken");
-      const response = await axios.get(`${SERVER_URL}/user/me`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      if (response) {
-        setUserData(response.data);
-        console.log("성공");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
 
   const openModal = (type: string, data: string = "") => {
     setModalType(type);
@@ -114,17 +88,21 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <AuthContainer>
       <Nav title="프로필" router="Profile" />
 
       <MainWrapper>
         <ProfileImage source={{ uri: profileImage }} />
-        {userData && (
+        {user && (
           <>
-            <Name>{userData.username}</Name>
+            <Name>{user.username}</Name>
             <Role>
-              {userData.userType === "Protector" ? "보호자" : "관리대상자"}
+              {user.userType === "Protector" ? "보호자" : "관리대상자"}
             </Role>
           </>
         )}

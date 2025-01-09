@@ -2,11 +2,11 @@ import { useState } from "react";
 import * as S from "../../style/user";
 import Nav from "@/components/Nav/nav";
 import { Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import { UserType } from "@/components/UserBox/userType";
+import { userType } from "@/components/UserBox/userType";
 import UserBox from "@/components/UserBox/userBox";
 
 export default function AddUser() {
-  const userList: UserType[] = [
+  const userList: userType[] = [
     { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
     { id: "2", name: "이름", number: "01012345678", state: "7시간 전" },
     { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },

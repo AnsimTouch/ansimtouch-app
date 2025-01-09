@@ -3,20 +3,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Locate from "./(tabs)/locate";
 import Taxi from "./(tabs)/taxi";
 import Emergency from "./(tabs)/emergency";
-import AddUser from "./(tabs)/addUser";
-import User from "./(tabs)/user";
 import ChangePassword from "./(tabs)/changePassword";
 import ChangePhone from "./(tabs)/changePhone";
-import Profile from "./(tabs)/Profile";
-import ForgotPassword from "./(tabs)/ForgotPassword";
-import Register from "./(tabs)/Register";
-import Login from "./(tabs)/Login";
-
-
 const Stack = createStackNavigator();
 import { Alert, AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
+import Profile from "./(tabs)/profile";
+import Register from "./(tabs)/register";
+import Login from "./(tabs)/login";
+import ForgotPassword from "./(tabs)/forgotPassword";
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -45,7 +41,7 @@ export default function RootLayout() {
   }, [appState]);
 
   return (
-    <Stack.Navigator initialRouteName="Taxi">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Locate"
         component={Locate}
@@ -59,7 +55,7 @@ export default function RootLayout() {
       <Stack.Screen
         name="Emergency"
         component={Emergency}
-                options={{ headerShown: false }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ForgotPassword"

@@ -23,7 +23,7 @@ type RootStackParamList = {
   AddUser: undefined;
 };
 
-const userList: UserType[] = [
+const userList: userType[] = [
   { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
   { id: "2", name: "이름", number: "01012345678", state: "현재 접속 중" },
   { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },
@@ -77,7 +77,7 @@ export default function User() {
             <Text style={{ color: "white" }}>추가하기</Text>
           </S.UserButton>
         </S.MenuTable>
-        <FlatList<UserType>
+        <FlatList<userType>
           style={styles.FlatList}
           data={userList}
           keyExtractor={(item) => item.id}
