@@ -15,10 +15,6 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   FlatList,
-  TouchableOpacity,
-  View,
-  Text,
-  StyleSheet,
 } from "react-native";
 
 export default function Chat() {
@@ -41,7 +37,7 @@ export default function Chat() {
       );
       if (res) {
         setChat("");
-        getChat();
+        getChat(); // 메시지 전송 후 채팅 기록을 다시 불러옵니다.
       }
     } catch (e) {
       console.error(e);
@@ -57,8 +53,7 @@ export default function Chat() {
         },
       });
       if (res) {
-        setChatList(res.data);
-        console.log("안녕");
+        setChatList((prevChatList) => [...prevChatList, ...res.data]);
       }
     } catch (e) {
       console.error("받기 실패", e);
@@ -74,17 +69,14 @@ export default function Chat() {
   const renderItem = ({ item }: { item: any }) => {
     const currentDate = item.timestamp.slice(0, 10);
 
-    // 날짜가 변경되었을 때만 Dateline을 렌더링
     const shouldRenderDateline = prevDate !== currentDate;
 
-    // 채팅 렌더링
     if (item.role === "assistant") {
       return (
         <>
           {shouldRenderDateline && <Dateline date={currentDate} />}
           <AiChat text={item.content} date={item.timestamp} />
           {shouldRenderDateline && setPrevDate(currentDate)}{" "}
-          {/* 이전 날짜 업데이트 */}
         </>
       );
     } else {
@@ -93,7 +85,6 @@ export default function Chat() {
           {shouldRenderDateline && <Dateline date={currentDate} />}
           <MyChat text={item.content} date={item.timestamp} />
           {shouldRenderDateline && setPrevDate(currentDate)}{" "}
-          {/* 이전 날짜 업데이트 */}
         </>
       );
     }
@@ -110,13 +101,11 @@ export default function Chat() {
       didShow.remove();
       didHide.remove();
     };
-  });
+  }, []);
 
   useEffect(() => {
-    if (chatList.length === 0) {
-      getChat();
-    }
-  });
+    getChat(); // 초기 채팅 기록 가져오기
+  }, []); // 빈 배열을 사용하여 처음 한번만 호출
 
   return (
     <KeyboardAvoidingView
@@ -129,11 +118,6 @@ export default function Chat() {
     >
       <S.Container>
         <Nav title="채팅하기" router="Home" />
-        <TouchableOpacity style={styles.container}>
-          <View style={styles.button}>
-            <Text style={styles.text}>채팅 초기화</Text>
-          </View>
-        </TouchableOpacity>
         <FlatList
           style={{
             flex: 1,
@@ -163,26 +147,3 @@ export default function Chat() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 50,
-    height: 40,
-  },
-  button: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 5,
-  },
-  text: {
-    fontSize: 20,
-    alignContent: "center",
-    justifyContent: "center",
-    color: "#FF4D4D",
-    fontWeight: 700,
-  },
-});

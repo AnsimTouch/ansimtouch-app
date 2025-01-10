@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Text,
   FlatList,
@@ -17,7 +18,6 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import SelectModal from "@/components/Modal/modal";
-import { useEffect, useState } from "react";
 import { useGetMe } from "@/hooks/useGetMe";
 import { SERVER_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,18 +33,56 @@ export default function User() {
   const { user, fetchUser } = useGetMe();
   const [userList, setUserList] = useState<any[]>([]);
 
+  const fetchUserInfo = async (userId: string) => {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    try {
+      const res = await axios.get(`${SERVER_URL}/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (res) {
+        // 여기서 `username`과 `tel`을 추출해서 반환
+        return {
+          name: res.data.username,
+          number: res.data.tel,
+        };
+      }
+    } catch (e) {
+      console.error("받기 실패", e);
+      return { name: "알 수 없는 이름", number: "알 수 없는 전화번호" };
+    }
+  };
+
   const onRelationship = async () => {
     try {
       const accessToken = await AsyncStorage.getItem("accessToken");
-      const res = await axios.get(`${SERVER_URL}/user/realationship`, {
+      const res = await axios.get(`${SERVER_URL}/user/relationship`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
         params: { userId: user?.id },
       });
-      if (res) {
-        setUserList(res.data);
-        console.log(res.data);
+
+      if (res && Array.isArray(res.data.protectors)) {
+        const protectorsData = res.data.protectors;
+
+        // 각 protector에 대해 fetchUserInfo 호출하여 추가 정보 가져오기
+        const updatedUserList = await Promise.all(
+          protectorsData.map(async (relation: any) => {
+            const protectorData = await fetchUserInfo(relation.id);
+            return {
+              id: relation.id,
+              name: protectorData?.name,
+              number: protectorData?.number,
+            };
+          })
+        );
+
+        setUserList(updatedUserList);
+        console.log(updatedUserList);
+      } else {
+        console.error("protectors는 배열이 아닙니다.", res.data.protectors);
       }
     } catch (e) {
       console.error("받기 실패", e);
@@ -85,6 +123,7 @@ export default function User() {
       </Pressable>
     );
   };
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <S.Container>
@@ -99,10 +138,10 @@ export default function User() {
         <FlatList<userType>
           style={styles.FlatList}
           data={userList}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <GestureHandlerRootView>
-              <Swipeable // 줄 그어지는 거 무시
+              <Swipeable
                 renderRightActions={(dragX) =>
                   renderRightActions(dragX, item.name)
                 }
