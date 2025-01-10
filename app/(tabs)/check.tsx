@@ -1,16 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text } from "react-native";
 import * as S from "../../style/check";
 import AdBox from "@/components/Home/adBox";
 import Box from "@/components/box";
 import HomeNav from "@/components/Home/honeNav";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SERVER_URL } from "@env";
+import { useGetMe } from "@/hooks/useGetMe";
+import axios from "axios";
 
 export default function Check() {
   const [isChecked, setIsChecked] = useState(false); // 체크 상태
+  const { user, fetchUser } = useGetMe();
 
-  const handleCheckToggle = () => {
-    setIsChecked(!isChecked);
+  const handleCheckToggle = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.post(
+        `${SERVER_URL}/attendance/mark`,
+        {},
+        {
+          params: { userId: user?.id },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res) {
+        console.log("완료");
+        setIsChecked(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const checked = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.get(`${SERVER_URL}/attendance/status`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: { userId: user?.id },
+      });
+      if (res) {
+        setIsChecked(res.data.checked);
+      }
+    } catch (e) {
+      console.error("받기 실패", e);
+    }
+  };
+
+  useEffect(() => {
+    checked();
+    fetchUser();
+  }, []);
 
   return (
     <S.Container>

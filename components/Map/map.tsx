@@ -13,7 +13,7 @@ export default function Map({ setLocationName, setRegion }: mapProps) {
 
   const changeRegion = (newRegion: Region) => {
     setLocalRegion(newRegion);
-    setRegion?.(newRegion);
+    setRegion?.(newRegion); 
   };
 
   const fetchLocation = async () => {

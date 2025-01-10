@@ -36,7 +36,7 @@ export default function User() {
   const onRelationship = async () => {
     try {
       const accessToken = await AsyncStorage.getItem("accessToken");
-      const res = await axios.get(`${SERVER_URL}/user/$realationship`, {
+      const res = await axios.get(`${SERVER_URL}/user/realationship`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

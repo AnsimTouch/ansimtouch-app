@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { AppState, AppStateStatus } from "react-native";
 import Locate from "./(tabs)/locate";
 import Taxi from "./(tabs)/taxi";
 import Emergency from "./(tabs)/emergency";
@@ -9,44 +10,53 @@ import Chat from "./(tabs)/chat";
 import Home from "./(tabs)/home";
 import Check from "./(tabs)/check";
 import Alarm from "./(tabs)/Alarm";
-import { AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
 import Profile from "./(tabs)/Profile";
 import Register from "./(tabs)/Register";
 import Login from "./(tabs)/Login";
 import ForgotPassword from "./(tabs)/ForgotPassword";
-import { useGetMe } from "@/hooks/useGetMe";
+import { useGetLocation } from "@/hooks/useGetLoc";
+
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
     AppState.currentState
   );
+  const { location, updateLocation } = useGetLocation();
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         console.log("앱이 포어그라운드로 전환됨");
+        updateLocation();
       } else if (nextAppState === "background") {
         console.log("앱이 백그라운드로 전환됨");
       }
       setAppState(nextAppState);
     };
 
-    // 앱 상태 변경 이벤트 리스너 추가
     const appStateSubscription = AppState.addEventListener(
       "change",
       handleAppStateChange
     );
 
     return () => {
-      appStateSubscription.remove(); // 이벤트 리스너 제거
+      appStateSubscription.remove();
     };
-  }, [appState]);
+  }, [appState, updateLocation]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updateLocation();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [updateLocation, location]);
 
   return (
-    <Stack.Navigator initialRouteName="Locate">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Locate"
         component={Locate}
