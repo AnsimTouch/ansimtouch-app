@@ -17,6 +17,9 @@ import Register from "./(tabs)/Register";
 import Login from "./(tabs)/Login";
 import ForgotPassword from "./(tabs)/ForgotPassword";
 import { useGetLocation } from "@/hooks/useGetLoc";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SERVER_URL } from "@env";
+import axios from "axios";
 
 const Stack = createStackNavigator();
 
@@ -25,14 +28,42 @@ export default function RootLayout() {
     AppState.currentState
   );
   const { location, updateLocation } = useGetLocation();
+  const day = new Date();
+
+  const onUserState = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.post(
+        `${SERVER_URL}/user/status`,
+        {
+          lastUpdatedAt: day,
+          lastLocationLa: location?.latitude,
+          lastLocationLo: location?.longitude,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res) {
+        console.log("보내기 성공");
+      }
+    } catch (e) {
+      console.log("실패");
+    }
+  };
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
-        console.log("앱이 포어그라운드로 전환됨");
+        // 포어그라운드
         updateLocation();
       } else if (nextAppState === "background") {
-        console.log("앱이 백그라운드로 전환됨");
+        // 백그라운드
+        onUserState();
+        console.log("dkssud");
+        console.log(day);
       }
       setAppState(nextAppState);
     };
