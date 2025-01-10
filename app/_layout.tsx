@@ -20,7 +20,6 @@ import { useGetLocation } from "@/hooks/useGetLoc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SERVER_URL } from "@env";
 import axios from "axios";
-
 const Stack = createStackNavigator();
 
 export default function RootLayout() {

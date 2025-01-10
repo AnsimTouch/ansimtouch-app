@@ -1,50 +1,23 @@
-# Welcome to your Expo app 👋
+# 안심터치
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **독거노인의 고독사를 막기 위한 서비스**
 
-## Get started
+‘안심터치’는 독거노인의 고독사를 막기 위해 만들어진 서비스입니다.  
+출석체크, 위치 확인, 택시 호출, AI 채팅 등 다양한 기능을 통해 독거노인의 안전과 편의를 보장합니다.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 주요 기능
 
-2. Start the app
+### 1. **출석 체크**
+- 독거노인의 일일 활동 여부를 기록.
+- 보호자가 노인의 상태를 쉽게 확인 가능.
 
-   ```bash
-    npx expo start
-   ```
+### 2. **위치 서비스**
+- 독거노인의 현재 위치를 보호자가 실시간으로 확인.
 
-In the output, you'll find options to open the app in a
+### 3. **택시 호출 서비스**
+- 독거노인이 사용하기 쉬운 택시 호출.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 4. **AI 채팅 서비스**
+- 심심할 때 AI가 말동무가 되어 독거노인의 외로움 해소.
