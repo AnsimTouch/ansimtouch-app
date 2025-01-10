@@ -4,6 +4,7 @@ import AdBox from "@/components/Home/adBox";
 import UserBox from "@/components/Home/userBox";
 import { userType } from "@/components/Home/home";
 import Box from "@/components/box";
+import HomeNav from "@/components/Home/honeNav";
 
 const userList: userType[] = [
   { id: "1", name: "이름", state: "7시간 전" },
@@ -16,13 +17,7 @@ const userList: userType[] = [
 export default function Home() {
   return (
     <S.Container>
-      <S.Nav>
-        <S.NavTitle>안심터치</S.NavTitle>
-        <S.NavImage>
-          <Image source={require("../../assets/images/Bell.png")} />
-          <Image source={require("../../assets/images/Setting.png")} />
-        </S.NavImage>
-      </S.Nav>
+      <HomeNav />
 
       <S.MainWrapper>
         <AdBox />
@@ -46,7 +41,7 @@ export default function Home() {
             iconSource={require("../../assets/images/EmergencyAlarm.png")}
             title="긴급 알림"
             content="5분 이내로 응답이 없을시 보호자에게 알림을 전송합니다."
-            navigateTo="Taxi"
+            navigateTo="Emergency"
             backgroundColor="#FF3232"
           />
           {/* 유저추가 */}
@@ -54,7 +49,7 @@ export default function Home() {
             iconSource={require("../../assets/images/User.png")}
             title="유저 추가"
             content="관리할 사용자를 추가합니다."
-            navigateTo="Taxi"
+            navigateTo="User"
             backgroundColor="#ECF4FF"
           />
           {/* 위치확인 */}
@@ -62,7 +57,7 @@ export default function Home() {
             iconSource={require("../../assets/images/Location.png")}
             title="위치 확인"
             content="사용자의 위치를 확인합니다."
-            navigateTo="Taxi"
+            navigateTo="Locate"
             backgroundColor="#DEFFD6"
           />
         </S.BoxContainer>

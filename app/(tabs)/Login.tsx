@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -43,7 +43,7 @@ export default function Login() {
             "refreshToken",
             response.data.data.refreshToken
           );
-          setTimeout(() => navigation.navigate("Chat"), 1000); // 로그인 성공 후 홈 화면으로 이동
+          setTimeout(() => navigation.navigate("Home"), 1000); // 로그인 성공 후 홈 화면으로 이동
         }
       } catch (error) {
         setIsLoading(false);
@@ -55,6 +55,8 @@ export default function Login() {
       setErrorMessage("모든 필드를 입력하세요.");
     }
   };
+
+  useEffect(() => {});
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

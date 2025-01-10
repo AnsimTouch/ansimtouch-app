@@ -52,7 +52,7 @@ export default function Chat() {
       });
       if (res) {
         setChatList(res.data);
-        console.log("안녕")
+        console.log("안녕");
       }
     } catch (e) {
       console.error("받기 실패", e);

@@ -17,6 +17,8 @@ import Profile from "./(tabs)/Profile";
 import Register from "./(tabs)/Register";
 import Login from "./(tabs)/Login";
 import ForgotPassword from "./(tabs)/ForgotPassword";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useGetMe } from "@/hooks/useGetMe";
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -44,8 +46,21 @@ export default function RootLayout() {
     };
   }, [appState]);
 
+  const { user, fetchUser } = useGetMe();
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return null; // 로딩 중 정지해 놓기
+  }
+
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator
+      initialRouteName={
+        user ? (user?.userType === "Protector" ? "Home" : "Check ") : "Login"
+      }
+    >
       <Stack.Screen
         name="Locate"
         component={Locate}
@@ -104,8 +119,8 @@ export default function RootLayout() {
       <Stack.Screen
         name="Chat"
         component={Chat}
-                options={{ headerShown: false }}
-        />
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Alarm"
         component={Alarm}

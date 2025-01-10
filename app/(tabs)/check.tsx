@@ -3,6 +3,7 @@ import { Image, Text } from "react-native";
 import * as S from "../../style/check";
 import AdBox from "@/components/Home/adBox";
 import Box from "@/components/box";
+import HomeNav from "@/components/Home/honeNav";
 
 export default function Check() {
   const [isChecked, setIsChecked] = useState(false); // 체크 상태
@@ -13,13 +14,7 @@ export default function Check() {
 
   return (
     <S.Container>
-      <S.Nav>
-        <S.NavTitle>안심터치</S.NavTitle>
-        <S.NavImage>
-          <Image source={require("../../assets/images/Bell.png")} />
-          <Image source={require("../../assets/images/Setting.png")} />
-        </S.NavImage>
-      </S.Nav>
+      <HomeNav />
 
       <S.MainWrapper>
         <AdBox />
