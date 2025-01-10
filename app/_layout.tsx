@@ -52,7 +52,7 @@ export default function RootLayout() {
   }, []);
 
   if (!user) {
-    return null; // 로딩 중 정지해 놓기
+    return null; // 로딩 중 정재해 놓기
   }
 
   return (

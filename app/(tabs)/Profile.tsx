@@ -5,8 +5,15 @@ import SelectModal from "@/components/Modal/profile";
 import styled from "styled-components/native";
 import { SERVER_URL } from "@env";
 import { useGetMe } from "@/hooks/useGetMe";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+type RootStackParamList = {
+  [key: string]: undefined;
+};
 
 export default function Profile() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [profileImage, setProfileImage] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [role, setRole] = useState<string>("관리 대상자");
@@ -60,32 +67,14 @@ export default function Profile() {
   };
 
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        `${SERVER_URL}/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-
-      setProfileImage("");
-      setName("");
-      setRole("관리 대상자");
-      setPhone("");
-      setAttendanceTime("09:00");
-
-      window.location.href = "/login";
-      alert("로그아웃되었습니다.");
-    } catch (error) {
-      console.error("로그아웃 요청 중 오류:", error);
-      setErrorMessage("로그아웃에 실패했습니다. 다시 시도해주세요.");
-    }
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("refreshToken");
+    setProfileImage("");
+    setName("");
+    setRole("관리 대상자");
+    setPhone("");
+    setAttendanceTime("09:00");
+    navigation.navigate("Login");
   };
 
   useEffect(() => {
@@ -95,7 +84,6 @@ export default function Profile() {
   return (
     <AuthContainer>
       <Nav title="프로필" router="Profile" />
-
       <MainWrapper>
         <ProfileImage source={{ uri: profileImage }} />
         {user && (
@@ -106,7 +94,6 @@ export default function Profile() {
             </Role>
           </>
         )}
-
         <Section>
           <SectionTitle>정보 및 기능 수정</SectionTitle>
           <Box onPress={() => openModal("비밀번호 수정")}>
@@ -119,7 +106,6 @@ export default function Profile() {
             <BoxText>출석체크 시간 수정</BoxText>
           </Box>
         </Section>
-
         <Section>
           <SectionTitle>계정</SectionTitle>
           <LogoutBox onPress={handleLogout}>
@@ -127,9 +113,7 @@ export default function Profile() {
           </LogoutBox>
         </Section>
       </MainWrapper>
-
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
-
       <SelectModal
         isModalVisible={isModalVisible}
         onClose={closeModal}
@@ -189,11 +173,9 @@ const Box = styled.TouchableOpacity`
   padding-bottom: 18px;
   margin-bottom: 7px;
   border-radius: 5px;
-
   background-color: #ffffff;
   color: #141414;
   border: 1px solid #ededed;
-
   align-items: start;
 `;
 
@@ -208,11 +190,9 @@ const LogoutBox = styled.TouchableOpacity`
   padding-bottom: 18px;
   margin-bottom: 7px;
   border-radius: 5px;
-
   background-color: #ffffff;
   color: #141414;
   border: 1px solid #ededed;
-
   align-items: start;
 `;
 

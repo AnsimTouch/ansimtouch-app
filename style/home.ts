@@ -24,7 +24,7 @@ export const Nav = styled(Box)`
 `;
 
 export const NavTitle = styled.Text`
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
 `;
 

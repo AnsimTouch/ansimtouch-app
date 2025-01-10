@@ -61,7 +61,6 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <S.AuthContainer>
-        <Nav title="로그인" router="Login" />
         <S.MainWrapper>
           <S.Title>로그인</S.Title>
           <S.SubTitle>로그인 후 진행해주세요.</S.SubTitle>
