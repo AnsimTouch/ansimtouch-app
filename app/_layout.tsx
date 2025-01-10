@@ -46,7 +46,7 @@ export default function RootLayout() {
   }, [appState]);
 
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Locate">
       <Stack.Screen
         name="Locate"
         component={Locate}

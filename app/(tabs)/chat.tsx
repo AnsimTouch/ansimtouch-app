@@ -15,6 +15,10 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   FlatList,
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
 } from "react-native";
 
 export default function Chat() {
@@ -125,6 +129,11 @@ export default function Chat() {
     >
       <S.Container>
         <Nav title="채팅하기" router="Home" />
+        <TouchableOpacity style={styles.container}>
+          <View style={styles.button}>
+            <Text style={styles.text}>채팅 초기화</Text>
+          </View>
+        </TouchableOpacity>
         <FlatList
           style={{
             flex: 1,
@@ -154,3 +163,26 @@ export default function Chat() {
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: 50,
+    height: 40,
+  },
+  button: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 20,
+    alignContent: "center",
+    justifyContent: "center",
+    color: "#FF4D4D",
+    fontWeight: 700,
+  },
+});

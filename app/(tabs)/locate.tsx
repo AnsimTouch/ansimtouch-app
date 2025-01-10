@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Locate() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [locationName, setLocationName] = useState<string>(); // 위치 이름 만들기
+  const [locationName, setLocationName] = useState<string>();
   const onPressModalOpen = () => {
     setIsModalVisible(true);
   };
