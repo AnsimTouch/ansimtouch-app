@@ -17,25 +17,44 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import SelectModal from "@/components/Modal/modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetMe } from "@/hooks/useGetMe";
+import { SERVER_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 type RootStackParamList = {
   AddUser: undefined;
 };
 
-const userList: userType[] = [
-  { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "2", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "4", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "5", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "6", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  { id: "7", name: "이름", number: "01012345678", state: "현재 접속 중" },
-];
-
 export default function User() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedName, setSelectedName] = useState<string>("");
+  const { user, fetchUser } = useGetMe();
+  const [userList, setUserList] = useState<any[]>([]);
+
+  const onRelationship = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.get(`${SERVER_URL}/user/$realationship`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: { userId: user?.id },
+      });
+      if (res) {
+        setUserList(res.data);
+        console.log(res.data);
+      }
+    } catch (e) {
+      console.error("받기 실패", e);
+    }
+  };
+
+  useEffect(() => {
+    onRelationship();
+    fetchUser();
+  }, []);
 
   const onPressModalOpen = (name: string) => {
     setIsModalVisible(true);

@@ -28,6 +28,7 @@ export default function Alarm() {
       if (res) {
         console.log("보내기 성공");
         Alert.alert("요청을 승인했습니다.");
+        onRequestList();
       }
     } catch (e) {
       console.error(e);
