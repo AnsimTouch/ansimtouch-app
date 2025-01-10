@@ -6,6 +6,7 @@ import { SERVER_URL } from "@env";
 import { useEffect, useState } from "react";
 import { useGetMe } from "@/hooks/useGetMe";
 import { Alert } from "react-native";
+import Nav from "@/components/Nav/nav";
 
 export default function Alarm() {
   const { user, fetchUser } = useGetMe();
@@ -86,6 +87,7 @@ export default function Alarm() {
 
   return (
     <Container>
+      <Nav title="알람" router="Home" />
       <Notification type="TAXI_CALL" />
       {requestList.map((item) => {
         const userInfo = userInfoMap.get(item.id);

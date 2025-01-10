@@ -46,6 +46,7 @@ export default function User() {
         return {
           name: res.data.username,
           number: res.data.tel,
+          last: res.data.lastUpdatedAt,
         };
       }
     } catch (e) {
@@ -75,6 +76,7 @@ export default function User() {
               id: relation.id,
               name: protectorData?.name,
               number: protectorData?.number,
+              state: protectorData?.last,
             };
           })
         );
@@ -127,7 +129,7 @@ export default function User() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <S.Container>
-      <Nav title="유저 관리" router="User" />
+      <Nav title="유저 관리" router="Home" />
       <S.MainWrapper>
         <S.MenuTable>
           <S.Title>관리 유저</S.Title>
@@ -149,7 +151,7 @@ export default function User() {
                 <UserBox
                   name={item.name}
                   number={item.number}
-                  state={item.state}
+                  state={item.state.slice(11, 16)}
                 />
               </Swipeable>
             </GestureHandlerRootView>

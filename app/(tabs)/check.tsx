@@ -97,6 +97,13 @@ export default function Check() {
 
         <S.BoxContainer>
           <Box
+            iconSource={require("../../assets/images/Taxi.png")}
+            title="택시 호출"
+            content="사용자의 집으로 택시를 요청합니다."
+            navigateTo="Taxi"
+            backgroundColor="#FFD012"
+          />
+          <Box
             iconSource={require("../../assets/images/Chat.png")}
             title="채팅하기"
             content="AI와 채팅합니다."

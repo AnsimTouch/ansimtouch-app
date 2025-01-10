@@ -1,4 +1,15 @@
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SERVER_URL } from "@env";
+import { useGetMe } from "@/hooks/useGetMe";
 
 interface SelectModalProps {
   isModalVisible: boolean;
@@ -16,6 +27,30 @@ export default function SelectModal({
   const onPressModalClose = () => {
     setIsModalVisible(false);
   };
+  const { user } = useGetMe();
+  const emergency = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.post(
+        `${SERVER_URL}/emergency`,
+        {},
+        {
+          params: { userId: user?.id },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res) {
+        console.log("보내기 성공");
+        Alert.alert("긴급호출 했습니다.");
+      }
+    } catch (e) {
+      console.error(e);
+      Alert.alert("전송에 실패했습니다.");
+    }
+  };
+
   return (
     <Modal animationType="fade" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
@@ -33,6 +68,7 @@ export default function SelectModal({
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: "#FF3232" }]}
+              onPress={emergency}
             >
               <Text style={styles.modalConfirmText}>실행</Text>
             </TouchableOpacity>

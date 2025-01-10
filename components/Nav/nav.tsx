@@ -6,21 +6,39 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type RootStackParamList = {
+  Locate: undefined;
+  Taxi: undefined;
+  Emergency: undefined;
+  ChangePassword: undefined;
+  ChangePhone: undefined;
+  Chat: undefined;
+  Home: undefined;
+  Check: undefined;
+  Alarm: undefined;
+  AddUser: undefined;
+  User: undefined;
+  Profile: undefined;
+  Register: undefined;
+  Login: undefined;
+  ForgotPassword: undefined;
+};
 
 interface NavProps {
   title: string;
-  router: string;
+  router: keyof RootStackParamList;
 }
 
 export default function Nav({ title, router }: NavProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const handleNavigate = () => {
-    if (navigation.canGoBack()) {
-      navigation.navigate(router as never);
-    }
+    navigation.navigate(router);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={handleNavigate} style={{ height: "100%" }}>
@@ -30,6 +48,7 @@ export default function Nav({ title, router }: NavProps) {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",

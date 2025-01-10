@@ -13,7 +13,7 @@ export default function Map({ setLocationName, setRegion }: mapProps) {
 
   const changeRegion = (newRegion: Region) => {
     setLocalRegion(newRegion);
-    setRegion?.(newRegion); 
+    setRegion?.(newRegion);
   };
 
   const fetchLocation = async () => {
@@ -43,7 +43,7 @@ export default function Map({ setLocationName, setRegion }: mapProps) {
   const fetchLocationName = async ({ latitude, longitude }: Region) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCL57ujUQIFfI1nLM6AIzdqvv1ovQd301A`
       );
       const data = await response.json();
 
