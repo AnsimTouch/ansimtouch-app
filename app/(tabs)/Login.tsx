@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "expo-router";
 import { StackNavigationProp } from "@react-navigation/stack";
-import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/auth";
 import * as S from "../../style/auth";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -49,6 +48,9 @@ export default function Login() {
         setIsLoading(false);
         setModalMessage("로그인 실패! 다시 시도해주세요.");
         setIsModalVisible(true);
+        console.log(phone);
+        console.log(password);
+        console.log(SERVER_URL);
         console.log(error);
       }
     } else {
@@ -80,9 +82,6 @@ export default function Login() {
         </S.MainWrapper>
 
         {/* 임시 */}
-        <S.Link onPress={() => navigation.navigate("ForgotPassword")}>
-          <S.LinkText>비밀번호를 잊으셨나요?</S.LinkText>
-        </S.Link>
         <S.Link onPress={() => navigation.navigate("Register")}>
           <S.LinkText>회원가입</S.LinkText>
         </S.Link>

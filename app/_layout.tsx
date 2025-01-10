@@ -9,7 +9,6 @@ import Chat from "./(tabs)/chat";
 import Home from "./(tabs)/home";
 import Check from "./(tabs)/check";
 import Alarm from "./(tabs)/Alarm";
-const Stack = createStackNavigator();
 import { AppState, AppStateStatus } from "react-native";
 import AddUser from "./(tabs)/addUser";
 import User from "./(tabs)/user";
@@ -17,8 +16,8 @@ import Profile from "./(tabs)/Profile";
 import Register from "./(tabs)/Register";
 import Login from "./(tabs)/Login";
 import ForgotPassword from "./(tabs)/ForgotPassword";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGetMe } from "@/hooks/useGetMe";
+const Stack = createStackNavigator();
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -46,21 +45,8 @@ export default function RootLayout() {
     };
   }, [appState]);
 
-  const { user, fetchUser } = useGetMe();
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  if (!user) {
-    return null; // 로딩 중 정재해 놓기
-  }
-
   return (
-    <Stack.Navigator
-      initialRouteName={
-        user ? (user?.userType === "Protector" ? "Home" : "Check ") : "Login"
-      }
-    >
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Locate"
         component={Locate}

@@ -15,6 +15,7 @@ interface NotificationProps {
   phoneNumber?: string;
   onApprove?: () => void;
   onReject?: () => void;
+  id?: number;
 }
 const Notification: React.FC<NotificationProps> = ({
   type,
@@ -22,6 +23,7 @@ const Notification: React.FC<NotificationProps> = ({
   phoneNumber,
   onApprove,
   onReject,
+  id,
 }) => {
   const getNotificationConfig = () => {
     switch (type) {

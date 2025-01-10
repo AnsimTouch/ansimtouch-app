@@ -45,7 +45,7 @@ export const UserButton = styled.TouchableOpacity`
 
 export const SearchView = styled.View`
   width: 100%;
-  height: 5%;
+  height: 10%;
   margin-bottom: 19px;
 `;
 

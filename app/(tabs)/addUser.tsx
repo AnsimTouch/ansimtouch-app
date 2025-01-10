@@ -1,25 +1,41 @@
 import { useState } from "react";
 import * as S from "../../style/user";
 import Nav from "@/components/Nav/nav";
-import { Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import { userType } from "@/components/UserBox/userType";
-import UserBox from "@/components/UserBox/userBox";
+import { SERVER_URL } from "@env";
+import { TouchableOpacity, StyleSheet, Text, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function AddUser() {
-  const userList: userType[] = [
-    { id: "1", name: "이름", number: "01012345678", state: "현재 접속 중" },
-    { id: "2", name: "이름", number: "01012345678", state: "7시간 전" },
-    { id: "3", name: "이름", number: "01012345678", state: "현재 접속 중" },
-    { id: "4", name: "이름", number: "01012345678", state: "현재 접속 중" },
-    { id: "5", name: "이름", number: "01012345678", state: "현재 접속 중" },
-    { id: "6", name: "이름", number: "01012345678", state: "현재 접속 중" },
-    { id: "7", name: "이름", number: "01012345678", state: "현재 접속 중" },
-  ];
+  const [number, setNumber] = useState<string>("");
 
-  const [number, setNumber] = useState<string>();
   const isNumber = (value: string) => {
     setNumber(value);
   };
+  const onAddNum = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.post(
+        `${SERVER_URL}/user/ward`,
+        {},
+        {
+          params: { wardTel: number },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res) {
+        console.log("보내기 성공");
+        Alert.alert("보냈습니다");
+      }
+    } catch (e) {
+      console.error(e);
+      console.log(number);
+      Alert.alert("전송에 실패했습니다.");
+    }
+  };
+
   return (
     <S.Container>
       <Nav title="유저 추가하기" router="User" />
@@ -32,28 +48,20 @@ export default function AddUser() {
             maxLength={13}
           />
           <TouchableOpacity
-            style={{ position: "absolute", right: "10%", top: "20%" }}
+            style={{ position: "absolute", right: "10%", top: "40%" }}
+            onPress={onAddNum}
           >
-            <Image source={require("../../assets/images/Search.png")} />
+            <Text style={styles.add}>추가하기</Text>
           </TouchableOpacity>
         </S.SearchView>
-        <FlatList<UserType>
-          style={styles.FlatList}
-          data={userList}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <UserBox name={item.name} number={item.number} state={item.state} />
-          )}
-        />
       </S.MainWrapper>
     </S.Container>
   );
 }
 
 const styles = StyleSheet.create({
-  FlatList: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
+  add: {
+    color: "#2882FF",
+    fontSize: 20,
   },
 });

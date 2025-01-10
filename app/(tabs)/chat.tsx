@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Dateline from "@/components/ChatModel/dateline";
 import {
   Image,
   Keyboard,
@@ -13,13 +14,14 @@ import {
   Platform,
   NativeSyntheticEvent,
   TextInputChangeEventData,
-  FlatList, // FlatList 추가
+  FlatList,
 } from "react-native";
 
 export default function Chat() {
   const [chatList, setChatList] = useState<any[]>([]);
   const [chat, setChat] = useState<string>("");
   const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+  const [prevDate, setPrevDate] = useState<string>("");
 
   const postChat = async () => {
     try {
@@ -66,12 +68,31 @@ export default function Chat() {
   };
 
   const renderItem = ({ item }: { item: any }) => {
-    // 채팅 랜더림ㅇ
-    return item.role === "assistant" ? (
-      <AiChat text={item.content} date={item.timestamp} />
-    ) : (
-      <MyChat text={item.content} date={item.timestamp} />
-    );
+    const currentDate = item.timestamp.slice(0, 10);
+
+    // 날짜가 변경되었을 때만 Dateline을 렌더링
+    const shouldRenderDateline = prevDate !== currentDate;
+
+    // 채팅 렌더링
+    if (item.role === "assistant") {
+      return (
+        <>
+          {shouldRenderDateline && <Dateline date={currentDate} />}
+          <AiChat text={item.content} date={item.timestamp} />
+          {shouldRenderDateline && setPrevDate(currentDate)}{" "}
+          {/* 이전 날짜 업데이트 */}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {shouldRenderDateline && <Dateline date={currentDate} />}
+          <MyChat text={item.content} date={item.timestamp} />
+          {shouldRenderDateline && setPrevDate(currentDate)}{" "}
+          {/* 이전 날짜 업데이트 */}
+        </>
+      );
+    }
   };
 
   useEffect(() => {

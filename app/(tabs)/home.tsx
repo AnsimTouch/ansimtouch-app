@@ -1,10 +1,13 @@
-import { Image } from "react-native";
+import { Image, Text, View } from "react-native";
 import * as S from "../../style/home";
 import AdBox from "@/components/Home/adBox";
 import UserBox from "@/components/Home/userBox";
 import { userType } from "@/components/Home/home";
 import Box from "@/components/box";
 import HomeNav from "@/components/Home/honeNav";
+import Check from "./check";
+import { useEffect } from "react";
+import { useGetMe } from "@/hooks/useGetMe";
 
 const userList: userType[] = [
   { id: "1", name: "이름", state: "7시간 전" },
@@ -13,17 +16,35 @@ const userList: userType[] = [
   { id: "4", name: "이름", state: "현재 접속 중" },
 ];
 
-// 한번에 두 개 딱 맞게 하는 건 도저히 못하겠음 나중에 시간 남으면 ㄱㄱ
 export default function Home() {
-  return (
+  const { user, fetchUser } = useGetMe();
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>사용자 정보를 불러오는 중에 문제가 발생했습니다.</Text>
+      </View>
+    );
+  }
+
+  // 유저가 "Protector" 타입일 경우
+  return user?.userType === "Protector" ? (
     <S.Container>
       <HomeNav />
 
       <S.MainWrapper>
         <AdBox />
         <S.UserWrapper horizontal={true} showsHorizontalScrollIndicator={false}>
-          {userList.map((id) => (
-            <UserBox key={id.id} name={id.name} state={id.state} />
+          {userList.map((userData) => (
+            <UserBox
+              key={userData.id}
+              name={userData.name}
+              state={userData.state}
+            />
           ))}
         </S.UserWrapper>
 
@@ -32,7 +53,7 @@ export default function Home() {
           <Box
             iconSource={require("../../assets/images/Taxi.png")}
             title="택시 호출"
-            content="사용자의 집으로로 택시를 요청합니다."
+            content="사용자의 집으로 택시를 요청합니다."
             navigateTo="Taxi"
             backgroundColor="#FFD012"
           />
@@ -63,5 +84,7 @@ export default function Home() {
         </S.BoxContainer>
       </S.MainWrapper>
     </S.Container>
+  ) : (
+    <Check />
   );
 }

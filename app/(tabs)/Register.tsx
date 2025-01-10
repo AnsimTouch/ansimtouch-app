@@ -6,7 +6,11 @@ import Nav from "@/components/Nav/nav";
 import SelectModal from "@/components/Modal/auth";
 import * as S from "../../style/auth";
 import styled from "styled-components/native";
-import { TouchableOpacity } from "react-native";
+import {
+  Keyboard,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { SERVER_URL } from "@env";
 
 type RootStackParamList = {
@@ -116,92 +120,91 @@ export default function Register() {
   };
 
   return (
-    <S.AuthContainer>
-      <Nav title="회원가입" router="Register" />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <S.AuthContainer>
+        <Nav title="회원가입" router="Register" />
+        <S.MainWrapper>
+          <S.Title>회원가입</S.Title>
+          <S.SubTitle>회원가입 후 진행해주세요.</S.SubTitle>
 
-      <S.MainWrapper>
-        <S.Title>회원가입</S.Title>
-        <S.SubTitle>회원가입 후 진행해주세요.</S.SubTitle>
-
-        <S.Input
-          placeholder="이름을 입력해주세요."
-          placeholderTextColor="#4C4C4C"
-          value={name}
-          onChangeText={setName}
-        />
-        <S.Input
-          placeholder="비밀번호를 입력해주세요."
-          placeholderTextColor="#4C4C4C"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <S.Input
-          placeholder="비밀번호를 재입력해주세요."
-          placeholderTextColor="#4C4C4C"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-        />
-        <S.PhoneInputWrapper>
           <S.Input
-            placeholder="전화번호를 입력해주세요."
+            placeholder="이름을 입력해주세요."
             placeholderTextColor="#4C4C4C"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="numeric"
-            style={{ flex: 1 }}
-            maxLength={11}
-          ></S.Input>
-          <S.PhoneButton onPress={onRequestVerification}>
-            <S.PhoneText>인증하기</S.PhoneText>
-          </S.PhoneButton>
-        </S.PhoneInputWrapper>
-        {isVerificationStarted && (
+            value={name}
+            onChangeText={setName}
+          />
+          <S.Input
+            placeholder="비밀번호를 입력해주세요."
+            placeholderTextColor="#4C4C4C"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <S.Input
+            placeholder="비밀번호를 재입력해주세요."
+            placeholderTextColor="#4C4C4C"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
           <S.PhoneInputWrapper>
             <S.Input
-              placeholder="인증코드를 입력해주세요."
+              placeholder="전화번호를 입력해주세요."
               placeholderTextColor="#4C4C4C"
-              value={verificationCode}
-              onChangeText={setVerificationCode}
-            />
-            <S.PhoneButton onPress={onCheckCode}>
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              keyboardType="numeric"
+              style={{ flex: 1 }}
+              maxLength={11}
+            ></S.Input>
+            <S.PhoneButton onPress={onRequestVerification}>
               <S.PhoneText>인증하기</S.PhoneText>
             </S.PhoneButton>
           </S.PhoneInputWrapper>
-        )}
-      </S.MainWrapper>
+          {isVerificationStarted && (
+            <S.PhoneInputWrapper>
+              <S.Input
+                placeholder="인증코드를 입력해주세요."
+                placeholderTextColor="#4C4C4C"
+                value={verificationCode}
+                onChangeText={setVerificationCode}
+              />
+              <S.PhoneButton onPress={onCheckCode}>
+                <S.PhoneText>인증하기</S.PhoneText>
+              </S.PhoneButton>
+            </S.PhoneInputWrapper>
+          )}
+        </S.MainWrapper>
 
-      <CheckboxWrapper>
-        <CustomCheckbox
-          value={isParent}
-          onValueChange={() => handleCheckboxChange(true)}
-          label="보호자로 가입"
+        <CheckboxWrapper>
+          <CustomCheckbox
+            value={isParent}
+            onValueChange={() => handleCheckboxChange(true)}
+            label="보호자로 가입"
+          />
+          <CustomCheckbox
+            value={!isParent}
+            onValueChange={() => handleCheckboxChange(false)}
+            label="대상자로 가입"
+          />
+        </CheckboxWrapper>
+
+        {errorMessage ? <S.ErrorMessage>{errorMessage}</S.ErrorMessage> : null}
+
+        <S.Button onPress={onRegister} disabled={isLoading}>
+          <S.ButtonText>
+            {isLoading ? "회원가입 중..." : "회원가입"}
+          </S.ButtonText>
+        </S.Button>
+
+        <SelectModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          title="알림"
+          detail={modalMessage}
         />
-        <CustomCheckbox
-          value={!isParent}
-          onValueChange={() => handleCheckboxChange(false)}
-          label="대상자로 가입"
-        />
-
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <S.LinkText>이미 아이디가 있으신가요?</S.LinkText>
-        </TouchableOpacity>
-      </CheckboxWrapper>
-
-      {errorMessage ? <S.ErrorMessage>{errorMessage}</S.ErrorMessage> : null}
-
-      <S.Button onPress={onRegister} disabled={isLoading}>
-        <S.ButtonText>{isLoading ? "회원가입 중..." : "회원가입"}</S.ButtonText>
-      </S.Button>
-
-      <SelectModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        title="알림"
-        detail={modalMessage}
-      />
-    </S.AuthContainer>
+      </S.AuthContainer>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -210,7 +213,7 @@ const CheckboxWrapper = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  gap: 5%;
   margin-bottom: 10px;
 `;
 

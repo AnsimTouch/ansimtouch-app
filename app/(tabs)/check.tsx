@@ -58,6 +58,13 @@ export default function Check() {
             navigateTo="Chat"
             backgroundColor="#2882FF"
           />
+          <Box
+            iconSource={require("../../assets/images/User.png")}
+            title="유저 추가"
+            content="관리할 사용자를 추가합니다."
+            navigateTo="User"
+            backgroundColor="#ECF4FF"
+          />
         </S.BoxContainer>
       </S.MainWrapper>
     </S.Container>

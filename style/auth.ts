@@ -11,6 +11,7 @@ export const AuthContainer = styled.SafeAreaView`
 
 export const MainWrapper = styled.View`
   width: 90%;
+  margin-top: 10%;
 `;
 
 export const Title = styled.Text`
@@ -26,8 +27,8 @@ export const SubTitle = styled.Text`
 
 export const Input = styled.TextInput`
   width: 100%;
-  height: 50px;
-  font-size: 12px;
+  height: 70px;
+  font-size: 20px;
 
   background-color: #ffffff;
   border-width: 1px;
@@ -53,6 +54,7 @@ export const PhoneButton = styled.TouchableOpacity`
 
 export const PhoneText = styled.Text`
   color: #2882ff;
+  font-size: 20px;
 `;
 
 export const Link = styled.TouchableOpacity`
@@ -64,12 +66,12 @@ export const Link = styled.TouchableOpacity`
 
 export const LinkText = styled.Text`
   color: #2882ff;
-  font-size: 12px;
+  font-size: 20px;
 `;
 
 export const ErrorMessage = styled.Text`
   color: #ff4d4d;
-  font-size: 14px;
+  font-size: 20px;
   margin-top: 8px;
   text-align: center;
 `;
@@ -79,7 +81,6 @@ export const Button = styled.Pressable`
   padding: 20.5px;
   border-radius: 5px;
   align-items: center;
-
   position: absolute;
   bottom: 70px;
   left: 0;
