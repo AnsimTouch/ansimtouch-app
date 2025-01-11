@@ -6,40 +6,21 @@ import * as Location from "expo-location";
 interface mapProps {
   setLocationName?: (name: string) => void;
   setRegion?: (region: Region) => void;
+  initialRegion: Region; // 초기 지도 중심
 }
 
-export default function Map({ setLocationName, setRegion }: mapProps) {
-  const [region, setLocalRegion] = useState<Region | null>(null);
+export default function Map({
+  setLocationName,
+  setRegion,
+  initialRegion,
+}: mapProps) {
+  const [region, setLocalRegion] = useState<Region>(initialRegion);
 
   const changeRegion = (newRegion: Region) => {
     setLocalRegion(newRegion);
     setRegion?.(newRegion);
   };
 
-  const fetchLocation = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        alert("위치 권한이 거부되었습니다. 설정에서 위치 권한을 허용해주세요.");
-        return;
-      }
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-
-      const initialRegion = {
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      };
-      setLocalRegion(initialRegion);
-      setRegion?.(initialRegion);
-    } catch (e) {
-      console.error("현재 위치 가져오기 실패:", e);
-    }
-  };
-
-  // 위치 이름 가져오기
   const fetchLocationName = async ({ latitude, longitude }: Region) => {
     try {
       const response = await fetch(
@@ -61,31 +42,19 @@ export default function Map({ setLocationName, setRegion }: mapProps) {
   };
 
   useEffect(() => {
-    fetchLocation();
-  }, []);
-
-  useEffect(() => {
-    if (region) {
-      fetchLocationName(region);
-    }
+    fetchLocationName(region);
   }, [region]);
 
   return (
     <View style={styles.container}>
-      {region ? (
-        <MapView
-          region={region}
-          onRegionChangeComplete={changeRegion}
-          provider={PROVIDER_DEFAULT}
-          style={styles.map}
-        >
-          <Marker coordinate={region}></Marker>
-        </MapView>
-      ) : (
-        <View style={styles.loadingContainer}>
-          <Text>위치를 불러오는 중...</Text>
-        </View>
-      )}
+      <MapView
+        region={region}
+        onRegionChangeComplete={changeRegion}
+        provider={PROVIDER_DEFAULT}
+        style={styles.map}
+      >
+        <Marker coordinate={region}></Marker>
+      </MapView>
     </View>
   );
 }

@@ -47,6 +47,7 @@ export default function RootLayout() {
       );
       if (res) {
         console.log("보내기 성공");
+        console.log(location?.longitude);
       }
     } catch (e) {
       console.log("실패");
