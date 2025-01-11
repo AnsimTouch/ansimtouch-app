@@ -1,27 +1,100 @@
-import { Image, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
 import * as S from "../../style/home";
 import AdBox from "@/components/Home/adBox";
 import UserBox from "@/components/Home/userBox";
-import { userType } from "@/components/Home/home";
 import Box from "@/components/box";
 import HomeNav from "@/components/Home/honeNav";
 import Check from "./check";
-import { useEffect } from "react";
 import { useGetMe } from "@/hooks/useGetMe";
-
-const userList: userType[] = [
-  { id: "1", name: "이름", state: "7시간 전" },
-  { id: "2", name: "이름", state: "7시간 전" },
-  { id: "3", name: "이름", state: "현재 접속 중" },
-  { id: "4", name: "이름", state: "현재 접속 중" },
-];
+import axios from "axios";
+import { SERVER_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
+  const [userList, setUserList] = useState<any[]>([]);
   const { user, fetchUser } = useGetMe();
+
+  const fetchUserInfo = async (userId: string) => {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    try {
+      const res = await axios.get(`${SERVER_URL}/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (res) {
+        return {
+          name: res.data.username,
+          number: res.data.tel,
+          last: res.data.lastUpdatedAt,
+        };
+      }
+    } catch (e) {
+      console.error("유저 정보 가져오기 실패", e);
+      return {
+        name: "알 수 없는 이름",
+        number: "알 수 없는 전화번호",
+        last: null,
+      };
+    }
+  };
+
+  const onRelationship = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      const res = await axios.get(`${SERVER_URL}/user/relationship`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: { userId: user?.id },
+      });
+
+      if (res) {
+        const protecteesData = res.data.protectees || [];
+        const protectorsData = res.data.protectors || [];
+        const allRelations = [...protecteesData, ...protectorsData];
+        const updatedUserList = await Promise.all(
+          allRelations.map(async (relation: any) => {
+            const userData = await fetchUserInfo(relation.id);
+            return {
+              id: relation.id,
+              name: userData?.name || "Unknown",
+              number: userData?.number || "N/A",
+              state: userData?.last || null,
+            };
+          })
+        );
+
+        setUserList(updatedUserList);
+      } else {
+        console.error("응답 데이터가 없습니다.");
+      }
+    } catch (e) {
+      console.error("관계 정보 가져오기 실패", e);
+    }
+  };
+
+  const formatRelativeTime = (lastUpdatedAt: string | null): string => {
+    if (!lastUpdatedAt) return "알 수 없음";
+
+    const now = new Date();
+    const lastDate = new Date(lastUpdatedAt);
+    const diffInMinutes = Math.floor(
+      (now.getTime() - lastDate.getTime()) / (1000 * 60)
+    );
+
+    if (diffInMinutes < 60) return `${diffInMinutes}분 전`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}시간 전`;
+    return `${Math.floor(diffInMinutes / 1440)}일 전`;
+  };
 
   useEffect(() => {
     fetchUser();
-  }, []);
+    if (user) {
+      onRelationship();
+    }
+  }, [user]);
 
   if (!user) {
     return (
@@ -31,7 +104,6 @@ export default function Home() {
     );
   }
 
-  // 유저가 "Protector" 타입일 경우
   return user?.userType === "Protector" ? (
     <S.Container>
       <HomeNav />
@@ -43,7 +115,7 @@ export default function Home() {
             <UserBox
               key={userData.id}
               name={userData.name}
-              state={userData.state}
+              state={formatRelativeTime(userData.state)}
             />
           ))}
         </S.UserWrapper>

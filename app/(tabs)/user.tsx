@@ -42,7 +42,6 @@ export default function User() {
         },
       });
       if (res) {
-        // 여기서 `username`과 `tel`을 추출해서 반환
         return {
           name: res.data.username,
           number: res.data.tel,
@@ -65,26 +64,27 @@ export default function User() {
         params: { userId: user?.id },
       });
 
-      if (res && Array.isArray(res.data.protectors)) {
-        const protectorsData = res.data.protectors;
-
-        // 각 protector에 대해 fetchUserInfo 호출하여 추가 정보 가져오기
+      if (res) {
+        const protecteesData = res.data.protectees || [];
+        const protectorsData = res.data.protectors || [];
+        const allRelations = [...protecteesData, ...protectorsData];
         const updatedUserList = await Promise.all(
-          protectorsData.map(async (relation: any) => {
-            const protectorData = await fetchUserInfo(relation.id);
+          allRelations.map(async (relation: any) => {
+            const userData = await fetchUserInfo(relation.id);
             return {
               id: relation.id,
-              name: protectorData?.name,
-              number: protectorData?.number,
-              state: protectorData?.last,
+              name: userData?.name || "Unknown",
+              number: userData?.number || "N/A",
+              state: userData?.last || "N/A",
             };
           })
         );
 
+        // 상태 업데이트
         setUserList(updatedUserList);
-        console.log(updatedUserList);
+        console.log("Updated User List:", updatedUserList);
       } else {
-        console.error("protectors는 배열이 아닙니다.", res.data.protectors);
+        console.error("응답 데이터가 없습니다.");
       }
     } catch (e) {
       console.error("받기 실패", e);
@@ -127,6 +127,20 @@ export default function User() {
   };
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const formatRelativeTime = (lastUpdatedAt: string | null): string => {
+    if (!lastUpdatedAt) return "알 수 없음";
+
+    const now = new Date();
+    const lastDate = new Date(lastUpdatedAt);
+    const diffInMinutes = Math.floor(
+      (now.getTime() - lastDate.getTime()) / (1000 * 60)
+    );
+
+    if (diffInMinutes < 60) return `${diffInMinutes}분 전`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}시간 전`;
+    return `${Math.floor(diffInMinutes / 1440)}일 전`;
+  };
   return (
     <S.Container>
       <Nav title="유저 관리" router="Home" />
@@ -151,7 +165,7 @@ export default function User() {
                 <UserBox
                   name={item.name}
                   number={item.number}
-                  state={item.state.slice(11, 16)}
+                  state={formatRelativeTime(item.state)}
                 />
               </Swipeable>
             </GestureHandlerRootView>

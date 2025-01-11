@@ -58,11 +58,10 @@ export default function RootLayout() {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         // 포어그라운드
         updateLocation();
+        onUserState();
       } else if (nextAppState === "background") {
         // 백그라운드
         onUserState();
-        console.log("dkssud");
-        console.log(day);
       }
       setAppState(nextAppState);
     };
